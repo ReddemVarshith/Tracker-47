@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="dashboard-header fade-in delay-1" style="margin-bottom: 2rem;">
+    <h1 style="font-size: 2.5rem;">Welcome back, 47! 🌟</h1>
+    <p>Ready to conquer more advanced topics today?</p>
+</div>
+
+<!-- Overall Progress -->
+<div class="glass-card fade-in delay-2" style="padding: 2rem; margin-bottom: 3rem;">
+    <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 1rem;">
+        <div>
+            <h2 style="margin-bottom: 0.5rem; font-size: 1.5rem;">Overall Course Progress</h2>
+            <p>{{ completed_problems }} of {{ total_problems }} problems solved</p>
+        </div>
+        <div>
+            <span style="font-size: 2rem; font-weight: 800; color: var(--accent);">{{ progress_percentage }}%</span>
+        </div>
+    </div>
+
+    <div class="progress-container" style="height: 16px;">
+        <div class="progress-bar" style="width: {{ progress_percentage }}%;"></div>
+    </div>
+</div>
+
+<h2 class="fade-in delay-2" style="margin-bottom: 1.5rem; font-size: 1.8rem;">Your Learning Modules</h2>
+
+<div class="grid-3 fade-in delay-3">
+    {% for m_data in modules_data %}
+    <div class="glass-card"
+        style="padding: 1.5rem; display: flex; flex-direction: column; justify-content: space-between;">
+        <div>
+            {% if m_data.is_completed %}
+            <span class="badge badge-solved" style="float: right;">Completed</span>
+            {% endif %}
+            <h3 style="font-size: 1.3rem;">{{ m_data.module.title }}</h3>
+            <p style="font-size: 0.9rem; margin-bottom: 1rem;">{{ m_data.module.description|truncatewords:15 }}</p>
+        </div>
+
+        <div>
+            <div style="display: flex; justify-content: space-between; font-size: 0.85rem; margin-bottom: 5px;">
+                <span>Progress</span>
+                <span>{{ m_data.progress }}%</span>
+            </div>
+            <div class="progress-container" style="margin-bottom: 1.5rem;">
+                <div class="progress-bar" style="width: {{ m_data.progress }}%;"></div>
+            </div>
+
+            <a href="{% url 'learning:module_detail' m_data.module.id %}" class="btn btn-outline"
+                style="width: 100%; text-align: center;">View Module</a>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

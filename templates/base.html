@@ -1,0 +1,53 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}DSA Learning Platform{% endblock %}</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&family=Inter:wght@400;500;600&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    {% block extra_head %}{% endblock %}
+</head>
+
+<body>
+    <div class="container">
+        <header class="glass-panel fade-in delay-1" style="padding: 1rem 2rem; border-radius: 100px;">
+            <a href="{% url 'learning:dashboard' %}" class="logo">
+                <span>47's DSA Journey</span>
+            </a>
+
+            <div class="mascot-container" title="Click me for a surprise!"
+                style="border-radius: 50%; overflow: hidden; border: 2px solid var(--primary);">
+                <img src="{% static 'images/coder_pig.png' %}" alt="Cute Coder Pig Mascot" class="mascot"
+                    style="object-fit: cover;">
+            </div>
+        </header>
+
+        <main>
+            {% block content %}
+            {% endblock %}
+        </main>
+    </div>
+
+    <!-- Pig Mascot Interactions Script -->
+    <script>
+        document.querySelector('.mascot-container').addEventListener('click', function () {
+            const mascot = this.querySelector('.mascot');
+            mascot.style.animation = 'none';
+            mascot.style.transform = 'scale(1.5) rotate(360deg)';
+            setTimeout(() => {
+                mascot.style.transform = '';
+                mascot.style.animation = 'float 4s ease-in-out infinite';
+            }, 500);
+        });
+    </script>
+</body>
+
+</html>

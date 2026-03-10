@@ -1,0 +1,21 @@
+<svg xmlns="http://www.svg.org/2000/svg" viewBox="0 0 100 100">
+  <!-- Pig Body -->
+  <circle cx="50" cy="55" r="35" fill="#f472b6" />
+  
+  <!-- Pig Ears -->
+  <polygon points="25,35 15,15 40,25" fill="#ec4899" />
+  <polygon points="75,35 85,15 60,25" fill="#ec4899" />
+  
+  <!-- Pig Snout -->
+  <ellipse cx="50" cy="65" rx="15" ry="10" fill="#fbcfe8" />
+  <circle cx="45" cy="65" r="2" fill="#be185d" />
+  <circle cx="55" cy="65" r="2" fill="#be185d" />
+  
+  <!-- Pig Eyes -->
+  <circle cx="35" cy="45" r="4" fill="#111827" />
+  <circle cx="65" cy="45" r="4" fill="#111827" />
+  
+  <!-- Blush -->
+  <circle cx="25" cy="55" r="5" fill="#f43f5e" opacity="0.5" />
+  <circle cx="75" cy="55" r="5" fill="#f43f5e" opacity="0.5" />
+</svg>

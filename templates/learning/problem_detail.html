@@ -1,0 +1,416 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<style>
+    .container {
+        max-width: 98% !important;
+        padding: 1rem !important;
+    }
+</style>
+
+<div class="glass-panel"
+    style="padding: 1rem 1.5rem; display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+    <div style="display: flex; gap: 1rem; align-items: center;">
+        <a href="{% url 'learning:module_detail' problem.module.id %}" id="back-to-module-btn" class="btn btn-outline"
+            style="padding: 0.4rem 1rem; margin-right: 1rem;">&larr; Module</a>
+        <h1 style="font-size: 1.5rem; margin: 0;">{{ problem.title }}</h1>
+        <span class="badge badge-{{ problem.difficulty|lower }}">{{ problem.difficulty }}</span>
+    </div>
+
+    <div id="status-badge" class="badge {% if is_completed %}badge-easy{% else %}badge-hard{% endif %}"
+        style="padding: 0.5rem 1.2rem; font-size: 1rem; cursor: default;">
+        {% if is_completed %}✅ Solved{% else %}❌ Unsolved{% endif %}
+    </div>
+</div>
+
+<!-- Full Page Split Layout -->
+<div class="grid-2 fade-in"
+    style="grid-template-columns: 1fr 1.3fr; gap: 1rem; height: calc(100vh - 120px); min-height: 600px; max-height: 800px;">
+
+    <!-- Left Column: Description & Test Cases -->
+    <div class="glass-panel" style="padding: 1.5rem; overflow-y: auto; display: flex; flex-direction: column;">
+        <!-- Tabs Header -->
+        <div style="display: flex; gap: 1rem; border-bottom: 1px solid var(--border-light); margin-bottom: 1rem;">
+            <div id="tab-description" class="tab-btn active"
+                style="padding: 0.5rem 1rem; cursor: pointer; border-bottom: 2px solid var(--primary); font-weight: bold; color: var(--text-main);">
+                Description
+            </div>
+            <div id="tab-history" class="tab-btn"
+                style="padding: 0.5rem 1rem; cursor: pointer; color: var(--text-muted);">
+                Submissions
+            </div>
+        </div>
+
+        <div id="content-description"
+            style="display: block; font-size: 1.05rem; line-height: 1.6; color: var(--text-main); margin-bottom: 2rem;">
+            {% if problem.description %}
+            {{ problem.description|linebreaks }}
+            {% else %}
+            No description provided.
+            {% endif %}
+
+            {% if problem.input_format %}
+            <div style="margin-top: 1.5rem;">
+                <h4 style="color: var(--text-main); margin-bottom: 0.5rem;">Input Format</h4>
+                <div
+                    style="background: rgba(0,0,0,0.2); padding: 1rem; border-radius: 6px; font-family: monospace; font-size: 0.95rem; color: var(--text-muted);">
+                    {{ problem.input_format|linebreaksbr }}
+                </div>
+            </div>
+            {% endif %}
+
+            {% if problem.output_format %}
+            <div style="margin-top: 1.5rem;">
+                <h4 style="color: var(--text-main); margin-bottom: 0.5rem;">Output Format</h4>
+                <div
+                    style="background: rgba(0,0,0,0.2); padding: 1rem; border-radius: 6px; font-family: monospace; font-size: 0.95rem; color: var(--text-muted);">
+                    {{ problem.output_format|linebreaksbr }}
+                </div>
+            </div>
+            {% endif %}
+
+            {% if problem.constraints %}
+            <div style="margin-top: 1.5rem;">
+                <h4 style="color: var(--text-main); margin-bottom: 0.5rem;">Constraints</h4>
+                <ul
+                    style="background: rgba(0,0,0,0.2); padding: 1rem 1rem 1rem 2rem; border-radius: 6px; color: var(--text-muted); margin: 0;">
+                    {% for constraint in problem.constraints %}
+                    <li style="font-family: monospace; margin-bottom: 0.3rem;">{{ constraint }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+            {% endif %}
+
+            {% if problem.original_url %}
+            <div style="margin-top: 1rem;">
+                <a href="{{ problem.original_url }}" target="_blank" style="color: var(--accent);">Original Link
+                    ↗</a>
+            </div>
+            {% endif %}
+
+
+        </div>
+
+        <!-- History Content -->
+        <div id="content-history" style="display: none; height: 100%; overflow-y: auto;">
+            {% if submissions %}
+            <div style="display: flex; flex-direction: column; gap: 0.5rem;">
+                {% for sub in submissions %}
+                <div class="submission-card" data-code="{{ sub.code|escapejs }}" data-lang="{{ sub.language }}"
+                    style="background: rgba(0,0,0,0.3); padding: 1rem; border-radius: 8px; border-left: 3px solid {% if sub.passed_all_tests %}#10b981{% else %}#f87171{% endif %}; cursor: pointer; transition: background 0.2s;">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <span
+                            style="font-weight: bold; color: {% if sub.passed_all_tests %}#10b981{% else %}#f87171{% endif %};">
+                            {% if sub.passed_all_tests %}Accepted{% else %}Attempted{% endif %}
+                        </span>
+                        <span style="font-size: 0.85rem; color: var(--text-muted);">{{ sub.submitted_at|date:"M d, Y -
+                            g:i a" }}</span>
+                    </div>
+                    <div style="margin-top: 0.4rem; font-size: 0.9rem; color: var(--text-muted);">
+                        Language: <span style="color: var(--text-main);">{{ sub.language }}</span>
+                    </div>
+                    <div style="margin-top: 0.4rem; font-size: 0.8rem; color: var(--accent);">
+                        Click to view code
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            {% else %}
+            <div style="color: var(--text-muted); font-style: italic; text-align: center; margin-top: 2rem;">No previous
+                submissions found.</div>
+            {% endif %}
+        </div>
+
+        <div id="content-testcases" style="display: block;">
+            <h3 style="border-bottom: 1px solid var(--border-light); padding-bottom: 0.8rem; margin-top: 2rem;">Test
+                Cases</h3>
+            <div id="test-cases-container" style="display: flex; flex-direction: column; gap: 1rem; flex-grow: 1;">
+                {% if problem.sample_tests %}
+                {% for test in problem.sample_tests %}
+                <div
+                    style="background: rgba(0,0,0,0.3); padding: 1rem; border-radius: 8px; border-left: 3px solid var(--primary);">
+                    <div style="margin-bottom: 0.5rem;"><strong style="color: var(--text-muted);">Input:</strong> <span
+                            style="font-family: monospace; white-space: pre-wrap;">{{ test.input }}</span></div>
+                    <div><strong style="color: var(--text-muted);">Expected Output:</strong> <span
+                            style="font-family: monospace; white-space: pre-wrap;">{{ test.output }}</span></div>
+                </div>
+                {% endfor %}
+                {% else %}
+                <div style="color: var(--text-muted); font-style: italic;">No specific test cases defined. Code will
+                    execute dynamically.</div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <!-- Right Column: IDE & Terminal -->
+    <div style="display: flex; flex-direction: column; gap: 1rem; width: 100%; height: 100%;">
+
+        <!-- Code Editor Card -->
+        <div class="glass-card"
+            style="padding: 0; display: flex; flex-direction: column; flex-grow: 1; border-color: var(--primary); overflow: hidden; width: 100%;">
+            <!-- Editor Toolbar -->
+            <div
+                style="background: rgba(0,0,0,0.4); padding: 0.8rem 1rem; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-light);">
+                <select id="language-select" class="btn btn-outline"
+                    style="padding: 0.3rem 0.8rem; background: var(--bg-dark); appearance: auto; border-color: var(--border-light);">
+                    <option value="java">Java</option>
+                    <option value="python">Python</option>
+                    <option value="cpp">C++</option>
+                    <option value="javascript">JavaScript</option>
+                </select>
+                <div>
+                    <button id="run-code-btn" class="btn btn-outline"
+                        style="padding: 0.4rem 1rem; margin-right: 0.5rem; border-color: var(--accent); color: var(--accent);">
+                        ▶ Run Code
+                    </button>
+                    <button id="submit-code-btn" class="btn btn-primary" style="padding: 0.4rem 1rem;">
+                        ☁ Submit
+                    </button>
+                </div>
+            </div>
+
+            <!-- Monaco Container -->
+            <div id="editor-container" style="flex-grow: 1; width: 100%;"></div>
+        </div>
+
+        <!-- Custom Input and Terminal Card -->
+        <div style="height: 30%; display: flex; gap: 1rem;">
+            <!-- Custom Input -->
+            <div class="glass-card"
+                style="padding: 0; flex: 1; border-color: var(--border-light); overflow: hidden; display: flex; flex-direction: column;">
+                <div
+                    style="background: rgba(0,0,0,0.4); padding: 0.5rem 1rem; font-size: 0.9rem; color: var(--text-muted); border-bottom: 1px solid var(--border-light);">
+                    Custom Input
+                </div>
+                <div style="background: #0d0d0d; flex-grow: 1;">
+                    <textarea id="custom-input"
+                        style="width: 100%; height: 100%; background: transparent; color: #fff; border: none; padding: 1rem; resize: none; border-right: 1px solid var(--border-light); outline: none; font-family: 'JetBrains Mono', monospace; font-size: 0.9rem;"
+                        placeholder="Enter custom input here..."></textarea>
+                </div>
+            </div>
+
+            <!-- Terminal Output -->
+            <div class="glass-card"
+                style="padding: 0; flex: 1; border-color: var(--border-light); overflow: hidden; display: flex; flex-direction: column;">
+                <div
+                    style="background: rgba(0,0,0,0.4); padding: 0.5rem 1rem; font-size: 0.9rem; color: var(--text-muted); border-bottom: 1px solid var(--border-light);">
+                    Terminal Output
+                </div>
+                <div style="background: #0d0d0d; flex-grow: 1; padding: 1rem; overflow-y: auto;">
+                    <pre id="terminal-output"
+                        style="margin: 0; color: #10b981; font-family: 'JetBrains Mono', monospace; font-size: 0.9rem; white-space: pre-wrap; word-wrap: break-word;">Ready.</pre>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.38.0/min/vs/loader.min.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Tab Switching Logic
+        const tabDesc = document.getElementById('tab-description');
+        const tabHist = document.getElementById('tab-history');
+        const contentDesc = document.getElementById('content-description');
+        const contentHist = document.getElementById('content-history');
+        const contentTestcases = document.getElementById('content-testcases');
+
+        tabDesc.addEventListener('click', () => {
+            tabDesc.style.borderBottom = '2px solid var(--primary)';
+            tabDesc.style.fontWeight = 'bold';
+            tabDesc.style.color = 'var(--text-main)';
+
+            tabHist.style.borderBottom = 'none';
+            tabHist.style.fontWeight = 'normal';
+            tabHist.style.color = 'var(--text-muted)';
+
+            contentDesc.style.display = 'block';
+            contentTestcases.style.display = 'block';
+            contentHist.style.display = 'none';
+        });
+
+        tabHist.addEventListener('click', () => {
+            tabHist.style.borderBottom = '2px solid var(--primary)';
+            tabHist.style.fontWeight = 'bold';
+            tabHist.style.color = 'var(--text-main)';
+
+            tabDesc.style.borderBottom = 'none';
+            tabDesc.style.fontWeight = 'normal';
+            tabDesc.style.color = 'var(--text-muted)';
+
+            contentDesc.style.display = 'none';
+            contentTestcases.style.display = 'none';
+            contentHist.style.display = 'block';
+        });
+
+        // Feature removed: users can no longer manually mark as solved/unsolved.
+
+        // Monaco Editor Integration
+        require.config({ paths: { 'vs': 'https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.38.0/min/vs' } });
+        require(['vs/editor/editor.main'], function () {
+            const initialCode = {
+                java: 'public class Main {\n    public static void main(String[] args) {\n        System.out.println("Hello from Java!");\n    }\n}',
+                python: 'print("Hello from Python!")',
+                cpp: '#include <iostream>\n\nint main() {\n    std::cout << "Hello from C++!\\n";\n    return 0;\n}',
+                javascript: 'console.log("Hello from JavaScript!");'
+            };
+
+            const editor = monaco.editor.create(document.getElementById('editor-container'), {
+                value: initialCode['java'],
+                language: 'java',
+                theme: 'vs-dark',
+                automaticLayout: true,
+                fontSize: 14,
+                minimap: { enabled: false }
+            });
+
+            // Force editor layout on load and window resize
+            window.addEventListener('resize', () => {
+                editor.layout();
+            });
+            setTimeout(() => editor.layout(), 100);
+
+            const langSelect = document.getElementById('language-select');
+            langSelect.addEventListener('change', function () {
+                const lang = this.value;
+                monaco.editor.setModelLanguage(editor.getModel(), lang);
+                editor.setValue(initialCode[lang] || '');
+            });
+
+            const runBtn = document.getElementById('run-code-btn');
+            const submitBtn = document.getElementById('submit-code-btn');
+            const terminal = document.getElementById('terminal-output');
+
+            function executeCode(isSubmission) {
+                const code = editor.getValue();
+                const language = langSelect.value;
+                const btn = isSubmission ? submitBtn : runBtn;
+                const originalText = btn.innerHTML;
+
+                btn.disabled = true;
+                runBtn.disabled = true;
+                submitBtn.disabled = true;
+
+                btn.innerHTML = '⏳ Processing...';
+                terminal.innerHTML = '<span style="color: var(--text-muted);">Submitting to execution engine...</span>';
+
+                fetch("{% url 'learning:execute_code' %}", {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': '{{ csrf_token }}'
+                    },
+                    body: JSON.stringify({
+                        language: language,
+                        code: code,
+                        is_submission: isSubmission,
+                        problem_id: "{{ problem.id }}",
+                        stdin: document.getElementById('custom-input').value
+                    })
+                })
+                    .then(res => res.json())
+                    .then(data => {
+                        if (data.error) {
+                            terminal.innerHTML = `<span style="color: #f87171;">Error: ${data.error}</span>`;
+                        } else if (data.results) {
+                            let outputHtml = `<div style="margin-bottom: 1rem; font-size: 1.1rem;">`;
+
+                            // Only show "ALL TESTS PASSED" or "SOME FAILED" if we ran actual test cases (not just custom)
+                            const hasRealTests = data.results.some(r => !r.is_custom);
+
+                            if (hasRealTests) {
+                                if (data.passed_all) {
+                                    outputHtml += `<span style="color: #10b981; font-weight: bold;">🎉 ALL TESTS PASSED!</span></div>`;
+
+                                    // Update status badge automatically ONLY on full submission
+                                    if (data.is_submission) {
+                                        const statusBadge = document.getElementById('status-badge');
+                                        if (statusBadge) {
+                                            statusBadge.className = 'badge badge-easy';
+                                            statusBadge.innerHTML = '✅ Solved';
+                                        }
+                                    }
+                                } else {
+                                    outputHtml += `<span style="color: #f87171; font-weight: bold;">❌ SOME TESTS FAILED</span></div>`;
+                                }
+                            } else {
+                                outputHtml += `<span style="color: var(--accent); font-weight: bold;">⚙️ Custom Execution</span></div>`;
+                            }
+
+                            data.results.forEach(res => {
+                                const color = res.passed ? '#10b981' : '#f87171';
+                                const icon = res.is_custom ? (res.passed ? '✓' : '✗') : (res.passed ? '✓' : '✗');
+
+                                outputHtml += `<div style="margin-bottom: 1rem; border-left: 3px solid ${color}; padding-left: 1rem;">`;
+                                outputHtml += `<div style="color: ${color}; font-weight: bold; margin-bottom: 0.5rem;">Test Case ${res.test_case} ${icon}</div>`;
+
+                                if (res.input) {
+                                    outputHtml += `<div style="color: var(--text-muted); font-size: 0.85rem;">Input:</div><div>${res.input}</div>`;
+                                }
+
+                                if (!res.is_custom) {
+                                    outputHtml += `<div style="color: var(--text-muted); font-size: 0.85rem; margin-top: 0.5rem;">Expected:</div><div>${res.expected}</div>`;
+                                }
+
+                                outputHtml += `<div style="color: var(--text-muted); font-size: 0.85rem; margin-top: 0.5rem;">Actual Output:</div><div style="color: ${res.stderr ? '#f87171' : color};">${res.actual || '(no output)'}</div>`;
+
+                                if (res.stderr) {
+                                    outputHtml += `<div style="color: #f87171; font-size: 0.85rem; margin-top: 0.5rem;">Error:</div><div style="color: #f87171;">${res.stderr}</div>`;
+                                }
+                                outputHtml += `</div>`;
+                            });
+                            terminal.innerHTML = outputHtml;
+                        }
+                    })
+                    .catch(err => {
+                        terminal.innerHTML = `<span style="color: #f87171;">Compilation/Network Error: ${err}</span>`;
+                    })
+                    .finally(() => {
+                        runBtn.disabled = false;
+                        submitBtn.disabled = false;
+                        btn.innerHTML = originalText;
+                    });
+            }
+
+            runBtn.addEventListener('click', () => executeCode(false));
+            submitBtn.addEventListener('click', () => executeCode(true));
+
+            // View Previous Submission Code Logic
+            document.querySelectorAll('.submission-card').forEach(card => {
+                card.addEventListener('mouseenter', () => {
+                    card.style.background = 'rgba(255,255,255,0.05)';
+                });
+                card.addEventListener('mouseleave', () => {
+                    card.style.background = 'rgba(0,0,0,0.3)';
+                });
+                card.addEventListener('click', () => {
+                    const rawCode = card.getAttribute('data-code');
+                    const lang = card.getAttribute('data-lang');
+
+                    langSelect.value = lang;
+                    monaco.editor.setModelLanguage(editor.getModel(), lang);
+
+                    // Unescape the literal newlines preserved by django escapejs
+                    const decodedCode = rawCode.replace(/\\u000D\\u000A|[\\u000A\\u000B\\u000C\\u000D\\u0085\\u2028\\u2029]/g, '\n').replace(/\\x/g, '\\').replace(/\\'/g, "'").replace(/\\"/g, '"');
+
+                    editor.setValue(decodedCode);
+                });
+            });
+            // Back Button Override: Force navigation back to the Module page
+            const moduleUrl = "{% url 'learning:module_detail' problem.module.id %}";
+
+            // Push the current state so there's always a "previous" state to trap the back button
+            history.pushState(null, null, location.href);
+
+            window.addEventListener('popstate', function (event) {
+                // When the user hits the browser back button, immediately redirect to the module
+                window.location.href = moduleUrl;
+            });
+
+        });
+    });
+</script>
+{% endblock %}

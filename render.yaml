@@ -1,0 +1,16 @@
+databases:
+  # We will use the existing Neon DB, so we don't define a Render DB here.
+  # The Neon DB URL will be provided via the Render dashboard as DATABASE_URL.
+
+services:
+  - type: web
+    name: dsa-platform
+    env: python
+    buildCommand: "./build.sh"
+    startCommand: "gunicorn dsa_platform.wsgi:application"
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.13.0
+      - key: PORT
+        value: 10000
+    autoDeploy: false

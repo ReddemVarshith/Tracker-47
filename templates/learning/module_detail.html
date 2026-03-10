@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<a href="{% url 'learning:dashboard' %}" style="display: inline-block; margin-bottom: 1rem;">&larr; Back to
+    Dashboard</a>
+
+<div class="glass-panel fade-in delay-1" style="padding: 2rem; margin-bottom: 2rem;">
+    <h1 style="font-size: 2.5rem; margin-bottom: 0.5rem;">{{ module.title }}</h1>
+    <p style="font-size: 1.1rem; max-width: 800px;">{{ module.description }}</p>
+</div>
+
+<div class="grid-2 fade-in delay-2" style="grid-template-columns: 1fr 2fr;">
+    <!-- Lectures -->
+    <div>
+        <h2 style="font-size: 1.5rem; margin-bottom: 1rem;">Video Lectures</h2>
+        {% for lecture in lectures %}
+        <div class="glass-card" style="padding: 1rem; margin-bottom: 1rem;">
+            <h4 style="margin-bottom: 0.5rem;">{{ lecture.title }}</h4>
+            {% if lecture.video_url %}
+            <a href="{{ lecture.video_url }}" target="_blank" class="btn btn-primary"
+                style="padding: 0.5rem 1rem; font-size: 0.9rem;">
+                ▶ Watch Video
+            </a>
+            {% endif %}
+        </div>
+        {% empty %}
+        <p class="glass-card" style="padding: 1rem;">No lectures available for this module yet.</p>
+        {% endfor %}
+    </div>
+
+    <!-- Assignments -->
+    <div>
+        <h2 style="font-size: 1.5rem; margin-bottom: 1rem;">Assignment Problems</h2>
+        <div class="glass-card" style="overflow: hidden;">
+            <table style="width: 100%; border-collapse: collapse;">
+                <thead>
+                    <tr style="background: rgba(168, 85, 247, 0.1); text-align: left;">
+                        <th style="padding: 1rem;">Status</th>
+                        <th style="padding: 1rem;">Title</th>
+                        <th style="padding: 1rem;">Difficulty</th>
+                        <th style="padding: 1rem; text-align: right;">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for problem in problems %}
+                    <tr style="border-top: 1px solid rgba(255,255,255,0.05);">
+                        <td style="padding: 1rem;">
+                            {% if problem.id in completed_problems_ids %}
+                            <span style="color: var(--success); font-size: 1.2rem;">✓</span>
+                            {% else %}
+                            <span style="color: var(--text-muted); font-size: 1.2rem;">○</span>
+                            {% endif %}
+                        </td>
+                        <td style="padding: 1rem; font-weight: 500;">
+                            <a href="{% url 'learning:problem_detail' problem.id %}" style="color: var(--text-main);">
+                                {{ problem.title }}
+                            </a>
+                        </td>
+                        <td style="padding: 1rem;">
+                            <span class="badge badge-{{ problem.difficulty|lower }}">{{ problem.difficulty }}</span>
+                        </td>
+                        <td style="padding: 1rem; text-align: right;">
+                            <a href="{% url 'learning:problem_detail' problem.id %}" class="btn btn-outline"
+                                style="padding: 0.4rem 0.8rem; font-size: 0.85rem;">Solve</a>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="4" style="padding: 2rem; text-align: center;">No problems found.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}
