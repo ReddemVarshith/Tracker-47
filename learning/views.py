@@ -119,73 +119,6 @@ def execute_code(request):
                 except (Problem.DoesNotExist, ValueError, TypeError):
                     pass
 
-            def run_code_locally(src, stdin_data=''):
-                """Compile and run code locally using subprocess + temp files."""
-
-                with tempfile.TemporaryDirectory() as tmpdir:
-                    stdout, stderr = '', ''
-
-                    if language == 'python':
-                        fpath = os.path.join(tmpdir, 'main.py')
-                        with open(fpath, 'w') as f:
-                            f.write(src)
-                        result = subprocess.run(
-                            ['python3', fpath],
-                            input=stdin_data, capture_output=True, text=True, timeout=10
-                        )
-                        stdout = result.stdout
-                        stderr = result.stderr
-
-                    elif language == 'javascript':
-                        fpath = os.path.join(tmpdir, 'main.js')
-                        with open(fpath, 'w') as f:
-                            f.write(src)
-                        result = subprocess.run(
-                            ['node', fpath],
-                            input=stdin_data, capture_output=True, text=True, timeout=10
-                        )
-                        stdout = result.stdout
-                        stderr = result.stderr
-
-                    elif language == 'cpp':
-                        src_path = os.path.join(tmpdir, 'main.cpp')
-                        bin_path = os.path.join(tmpdir, 'main')
-                        with open(src_path, 'w') as f:
-                            f.write(src)
-                        compile_result = subprocess.run(
-                            ['g++', '-o', bin_path, src_path],
-                            capture_output=True, text=True, timeout=30
-                        )
-                        if compile_result.returncode != 0:
-                            return '', compile_result.stderr
-                        result = subprocess.run(
-                            [bin_path],
-                            input=stdin_data, capture_output=True, text=True, timeout=10
-                        )
-                        stdout = result.stdout
-                        stderr = result.stderr
-
-                    elif language == 'java':
-                        # Rename public class to 'Main' and save as Main.java
-                        java_src = re.sub(r'\bpublic\s+class\s+\w+', 'public class Main', src, count=1)
-                        src_path = os.path.join(tmpdir, 'Main.java')
-                        with open(src_path, 'w') as f:
-                            f.write(java_src)
-                        compile_result = subprocess.run(
-                            ['javac', src_path],
-                            capture_output=True, text=True, timeout=30
-                        )
-                        if compile_result.returncode != 0:
-                            return '', compile_result.stderr
-                        result = subprocess.run(
-                            ['java', '-cp', tmpdir, 'Main'],
-                            input=stdin_data, capture_output=True, text=True, timeout=10
-                        )
-                        stdout = result.stdout
-                        stderr = result.stderr
-
-                    return stdout, stderr
-
             results = []
             passed_all = True
             cases_to_run = []
@@ -216,39 +149,106 @@ def execute_code(request):
                             'index': idx + 1
                         })
 
-            for test in cases_to_run:
-                expected_input  = test.get('input', '')
-                if expected_input is not None:
-                    expected_input = str(expected_input)
-                else:
-                    expected_input = ''
-                expected_output = test.get('output')
-                is_custom = test.get('is_custom', False)
-                tc_index = test.get('index')
+            with tempfile.TemporaryDirectory() as tmpdir:
+                compilation_error = None
+                src_path = None
+                bin_path = None
 
-                try:
-                    stdout, stderr = run_code_locally(code, expected_input)
-                except subprocess.TimeoutExpired:
-                    stdout, stderr = '', 'Time Limit Exceeded'
+                if language == 'python':
+                    src_path = os.path.join(tmpdir, 'main.py')
+                    with open(src_path, 'w') as f:
+                        f.write(code)
+                elif language == 'javascript':
+                    src_path = os.path.join(tmpdir, 'main.js')
+                    with open(src_path, 'w') as f:
+                        f.write(code)
+                elif language == 'cpp':
+                    src_path = os.path.join(tmpdir, 'main.cpp')
+                    bin_path = os.path.join(tmpdir, 'main')
+                    with open(src_path, 'w') as f:
+                        f.write(code)
+                    compile_result = subprocess.run(
+                        ['g++', '-o', bin_path, src_path],
+                        capture_output=True, text=True, timeout=30
+                    )
+                    if compile_result.returncode != 0:
+                        compilation_error = compile_result.stderr
+                elif language == 'java':
+                    # Rename public class to 'Main' and save as Main.java
+                    java_src = re.sub(r'\bpublic\s+class\s+\w+', 'public class Main', code, count=1)
+                    src_path = os.path.join(tmpdir, 'Main.java')
+                    with open(src_path, 'w') as f:
+                        f.write(java_src)
+                    compile_result = subprocess.run(
+                        ['javac', src_path],
+                        capture_output=True, text=True, timeout=30
+                    )
+                    if compile_result.returncode != 0:
+                        compilation_error = compile_result.stderr
 
-                actual = stdout.strip()
-                if is_custom:
-                    passed = True if not stderr else False
-                else:
-                    exp_out_strip = str(expected_output).strip() if expected_output is not None else ""
-                    passed = (actual == exp_out_strip and not stderr)
-                    if not passed:
+                for test in cases_to_run:
+                    expected_input  = test.get('input', '')
+                    if expected_input is not None:
+                        expected_input = str(expected_input)
+                    else:
+                        expected_input = ''
+                    expected_output = test.get('output')
+                    is_custom = test.get('is_custom', False)
+                    tc_index = test.get('index')
+
+                    stdout, stderr = '', ''
+
+                    if compilation_error:
+                        stderr = compilation_error
                         passed_all = False
+                    else:
+                        try:
+                            if language == 'python':
+                                run_res = subprocess.run(
+                                    ['python3', src_path],
+                                    input=expected_input, capture_output=True, text=True, timeout=5
+                                )
+                                stdout, stderr = run_res.stdout, run_res.stderr
+                            elif language == 'javascript':
+                                run_res = subprocess.run(
+                                    ['node', src_path],
+                                    input=expected_input, capture_output=True, text=True, timeout=5
+                                )
+                                stdout, stderr = run_res.stdout, run_res.stderr
+                            elif language == 'cpp':
+                                run_res = subprocess.run(
+                                    [bin_path],
+                                    input=expected_input, capture_output=True, text=True, timeout=5
+                                )
+                                stdout, stderr = run_res.stdout, run_res.stderr
+                            elif language == 'java':
+                                run_res = subprocess.run(
+                                    ['java', '-cp', tmpdir, 'Main'],
+                                    input=expected_input, capture_output=True, text=True, timeout=5
+                                )
+                                stdout, stderr = run_res.stdout, run_res.stderr
+                        except subprocess.TimeoutExpired:
+                            stderr = 'Time Limit Exceeded'
+                            passed_all = False
 
-                results.append({
-                    "test_case": tc_index,
-                    "input": expected_input,
-                    "expected": str(expected_output).strip() if expected_output is not None else "N/A",
-                    "actual": actual,
-                    "stderr": stderr,
-                    "passed": passed,
-                    "is_custom": is_custom
-                })
+                    actual = stdout.strip()
+                    if is_custom:
+                        passed = True if not stderr else False
+                    else:
+                        exp_out_strip = str(expected_output).strip() if expected_output is not None else ""
+                        passed = (actual == exp_out_strip and not stderr)
+                        if not passed:
+                            passed_all = False
+
+                    results.append({
+                        "test_case": tc_index,
+                        "input": expected_input,
+                        "expected": str(expected_output).strip() if expected_output is not None else "N/A",
+                        "actual": actual,
+                        "stderr": stderr,
+                        "passed": passed,
+                        "is_custom": is_custom
+                    })
 
             if is_submission and problem:
                 user = get_user_47()
