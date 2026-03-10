@@ -218,6 +218,10 @@ def execute_code(request):
 
             for test in cases_to_run:
                 expected_input  = test.get('input', '')
+                if expected_input is not None:
+                    expected_input = str(expected_input)
+                else:
+                    expected_input = ''
                 expected_output = test.get('output')
                 is_custom = test.get('is_custom', False)
                 tc_index = test.get('index')
