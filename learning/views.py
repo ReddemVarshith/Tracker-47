@@ -3,6 +3,9 @@ from django.http import JsonResponse
 import json
 import re
 import requests
+import tempfile
+import subprocess
+import os
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.models import User
 from .models import Module, Problem, VideoLecture, UserProgress, Submission
@@ -118,7 +121,6 @@ def execute_code(request):
 
             def run_code_locally(src, stdin_data=''):
                 """Compile and run code locally using subprocess + temp files."""
-                import tempfile, subprocess, os
 
                 with tempfile.TemporaryDirectory() as tmpdir:
                     stdout, stderr = '', ''
