@@ -15,7 +15,7 @@ class Command(BaseCommand):
                 "https://youtu.be/4EP8YzcN0hQ?si=bRE87X98JupnyaSW",
                 "https://youtu.be/TAtrPoaJ7gc?si=cROr4d8aXTxS7f7M"
             ],
-            "Conditionals and loops": [
+            "Conditionals Loops": [
                 "https://youtu.be/ldYLYRNaucM?si=2KrC2fYR8kH35wRx",
                 "https://youtu.be/mA23x39DjbI?si=3GOr-v65MZEuh1lv"
             ],
@@ -36,7 +36,7 @@ class Command(BaseCommand):
                 "https://youtu.be/By_5-RRqVeE?si=hTCZFCN9SNjgW5b7",
                 "https://youtu.be/JfinxytTYFQ?si=Vqlsd8nsQTmh7BXN"
             ],
-            "String": [ # Matching "Strings" or "String"
+            "Strings": [ # Matching "Strings"
                 "https://youtu.be/zL1DPZ0Ovlo?si=ig9GQKboTGR_wnTV"
             ],
             "Pattern": [ # Matching "Patterns" or "Pattern"
