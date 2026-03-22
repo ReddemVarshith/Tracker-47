@@ -1,0 +1,200 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container" style="max-width: 1200px; margin: 0 auto; padding: 2rem; padding-bottom: 5rem;">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+        <div>
+            <h1 style="font-size: 2rem; margin-bottom: 0.5rem;">Review Attempt</h1>
+            <p style="color: var(--text-muted);">
+                Student: <strong>{{ attempt.user.username }}</strong> |
+                Module: <strong>{{ attempt.quiz.module.title }}</strong> |
+                Current Score: <strong id="attempt-score">{{ attempt.score }}</strong>/{{ attempt.total_questions }}
+            </p>
+        </div>
+        <a href="{% url 'learning:admin_quiz_list' %}" class="btn btn-outline">&larr; Back to List</a>
+    </div>
+
+    <!-- Section: Pending Review -->
+    <h2 style="margin-bottom: 1.5rem; color: var(--accent);">Pending Review ({{ pending_responses.count }})</h2>
+    {% for response in pending_responses %}
+    <div class="glass-panel response-card" id="response-{{ response.id }}"
+        style="padding: 2rem; margin-bottom: 2.5rem; transition: opacity 0.3s; border-left: 4px solid var(--accent);">
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
+            <!-- Left Side: Question & User Answer -->
+            <div>
+                <div class="badge" style="background: rgba(255,255,255,0.1); margin-bottom: 1rem;">
+                    {{ response.question.get_question_type_display }}
+                </div>
+                <h3 style="margin-bottom: 1.5rem; font-size: 1.2rem;">{{ response.question.text }}</h3>
+
+                <div
+                    style="background: rgba(255,255,255,0.05); padding: 1.5rem; border-radius: 8px; min-height: 150px; border: 1px solid rgba(255,255,255,0.1);">
+                    <div
+                        style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.8rem; text-transform: uppercase; letter-spacing: 1px;">
+                        User's Answer</div>
+                    <div
+                        style="white-space: pre-wrap; font-family: 'JetBrains Mono', monospace; font-size: 0.95rem; color: #fff;">
+                        {{ response.text_answer|default:"No answer provided." }}</div>
+                </div>
+            </div>
+
+            <!-- Right Side: Reference & Grading -->
+            <div>
+                <div
+                    style="background: rgba(168, 85, 247, 0.05); padding: 1.5rem; border-radius: 8px; margin-bottom: 1.5rem; border: 1px solid rgba(168, 85, 247, 0.2);">
+                    <div
+                        style="font-size: 0.75rem; color: var(--primary); margin-bottom: 0.8rem; text-transform: uppercase; letter-spacing: 1px;">
+                        Expected Output / Explanation</div>
+                    {% if response.question.explanation %}
+                    <p style="font-size: 0.95rem; line-height: 1.6; color: #eee;">{{ response.question.explanation }}
+                    </p>
+                    {% endif %}
+                    {% if response.question.expected_output %}
+                    <div
+                        style="margin-top: 1rem; padding: 10px; background: rgba(0,0,0,0.3); border-radius: 4px; font-family: monospace; color: #cfcfcf;">
+                        <strong>Expected Result:</strong><br>
+                        {{ response.question.expected_output }}
+                    </div>
+                    {% endif %}
+                </div>
+
+                <div style="margin-bottom: 1.5rem;">
+                    <label
+                        style="display: block; font-size: 0.85rem; margin-bottom: 0.5rem; color: var(--text-muted);">Reviewer
+                        Comment (Optional)</label>
+                    <textarea id="comment-{{ response.id }}" placeholder="Add feedback for the student..."
+                        style="width: 100%; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; color: white; padding: 0.75rem; min-height: 80px; resize: vertical;"></textarea>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                    <button onclick="submitReview({{ response.id }}, 'reject')" class="btn btn-outline"
+                        style="border-color: var(--error); color: var(--error);">
+                        ❌ Mark Incorrect
+                    </button>
+                    <button onclick="submitReview({{ response.id }}, 'approve')" class="btn btn-primary"
+                        style="background: var(--success); border-color: var(--success);">
+                        ✓ Mark Correct
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% empty %}
+    <div class="glass-panel"
+        style="text-align: center; padding: 2rem; margin-bottom: 2rem; background: rgba(34, 197, 94, 0.05);">
+        <p style="color: var(--success);">All caught up! No pending answers for this attempt.</p>
+    </div>
+    {% endfor %}
+
+    <!-- Section: MCQs (For reference) -->
+    <h2 style="margin-top: 4rem; margin-bottom: 1.5rem; color: var(--primary);">Multiple Choice Responses</h2>
+    {% for response in all_responses_with_randomized_choices %}
+    {% if response.question.question_type == 'MCQ' %}
+    <div class="glass-panel"
+        style="padding: 1.5rem; margin-bottom: 1.5rem; border-left: 4px solid {% if response.is_correct %}var(--success){% else %}var(--error){% endif %};">
+        <h4 style="margin-bottom: 1rem;">{{ response.question.text }}</h4>
+        <div class="choices-list">
+            {% for choice in response.question.randomized_choices %}
+            <div
+                style="padding: 0.5rem; margin-bottom: 0.25rem; border-radius: 4px; display: flex; align-items: center; 
+                {% if choice.is_correct %} background: rgba(34, 197, 94, 0.1); border: 1px solid var(--success); {% elif response.selected_choice == choice %} background: rgba(239, 68, 68, 0.1); border: 1px solid var(--error); {% endif %}">
+                <span style="margin-right: 0.8rem; font-weight: bold;">
+                    {% if choice.is_correct %}✓{% elif response.selected_choice == choice %}✗{% else %}○{% endif %}
+                </span>
+                <span
+                    style="{% if choice.is_correct %} color: var(--success); font-weight: bold; {% elif response.selected_choice == choice %} color: var(--error); {% endif %}">
+                    {{ choice.text }}
+                </span>
+            </div>
+            {% endfor %}
+        </div>
+        {% if response.question.explanation %}
+        <p style="margin-top: 1rem; font-size: 0.85rem; color: var(--text-muted); font-style: italic;">
+            <strong>Explanation:</strong> {{ response.question.explanation }}
+        </p>
+        {% endif %}
+    </div>
+    {% endif %}
+    {% endfor %}
+
+    <!-- Section: Reviewed Answers -->
+    {% if reviewed_responses %}
+    <h2 style="margin-top: 4rem; margin-bottom: 1.5rem; color: var(--text-muted);">Reviewed Subjective ({{
+        reviewed_responses.count }})</h2>
+    {% for response in reviewed_responses %}
+    <div class="glass-panel"
+        style="padding: 1.5rem; margin-bottom: 1.5rem; opacity: 0.7; border-left: 4px solid {% if response.is_correct %}var(--success){% else %}var(--error){% endif %};">
+        <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+            <div style="flex: 1;">
+                <h4 style="margin-bottom: 0.5rem;">{{ response.question.text }}</h4>
+                <div
+                    style="background: rgba(0,0,0,0.2); padding: 0.8rem; border-radius: 4px; font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; color: #bbb;">
+                    {{ response.text_answer }}
+                </div>
+            </div>
+            <div style="margin-left: 2rem; text-align: right;">
+                <div class="badge"
+                    style="background: {% if response.is_correct %}var(--success){% else %}var(--error){% endif %}; margin-bottom: 0.5rem;">
+                    {% if response.is_correct %}Correct{% else %}Incorrect{% endif %}
+                </div>
+                {% if response.reviewer_comment %}
+                <p style="font-size: 0.8rem; color: var(--text-muted); max-width: 200px;">{{ response.reviewer_comment
+                    }}</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+    {% endif %}
+</div>
+
+<script>
+    async function submitReview(responseId, action) {
+        const comment = document.getElementById(`comment-${responseId}`).value;
+        const card = document.getElementById(`response-${responseId}`);
+
+        try {
+            const res = await fetch('{% url "learning:admin_review_action" %}', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': '{{ csrf_token }}'
+                },
+                body: JSON.stringify({
+                    response_id: responseId,
+                    action: action,
+                    comment: comment
+                })
+            });
+
+            const data = await res.json();
+
+            if (data.status === 'success') {
+                document.getElementById('attempt-score').innerText = data.new_score;
+                card.style.opacity = '0.3';
+                card.style.pointerEvents = 'none';
+                card.style.filter = 'grayscale(1)';
+
+                if (data.attempt_completed) {
+                    setTimeout(() => {
+                        alert("All answers reviewed! The quiz status is now 'COMPLETED'.");
+                        window.location.href = '{% url "learning:admin_quiz_list" %}';
+                    }, 500);
+                }
+            } else {
+                alert("Error: " + data.message);
+            }
+        } catch (err) {
+            console.error(err);
+            alert("An error occurred while submitting the review.");
+        }
+    }
+</script>
+
+<style>
+    .response-card:hover {
+        border-color: var(--accent);
+        background: rgba(255, 255, 255, 0.04);
+    }
+</style>
+{% endblock %}

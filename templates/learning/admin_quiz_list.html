@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container" style="max-width: 1000px; margin: 0 auto; padding: 2rem;">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+        <h1 style="font-size: 2rem;">Pending Quiz Reviews</h1>
+        <a href="{% url 'learning:dashboard' %}" class="btn btn-outline">&larr; Back to Dashboard</a>
+    </div>
+
+    {% if attempts %}
+    <div class="glass-panel" style="overflow-x: auto;">
+        <table style="width: 100%; border-collapse: collapse; text-align: left;">
+            <thead>
+                <tr style="border-bottom: 1px solid rgba(255,255,255,0.1); color: var(--text-muted);">
+                    <th style="padding: 1rem;">Student</th>
+                    <th style="padding: 1rem;">Module</th>
+                    <th style="padding: 1rem;">Submitted At</th>
+                    <th style="padding: 1rem;">Current Score</th>
+                    <th style="padding: 1rem; text-align: right;">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for attempt in attempts %}
+                <tr style="border-bottom: 1px solid rgba(255,255,255,0.05);">
+                    <td style="padding: 1rem; font-weight: bold;">{{ attempt.user.username }}</td>
+                    <td style="padding: 1rem;">{{ attempt.quiz.module.title }}</td>
+                    <td style="padding: 1rem; color: var(--text-muted);">{{ attempt.completed_at|date:"M d, Y H:i" }}</td>
+                    <td style="padding: 1rem;">
+                        <span style="color: var(--primary); font-weight: bold;">{{ attempt.score }}</span> / {{ attempt.total_questions }}
+                    </td>
+                    <td style="padding: 1rem; text-align: right;">
+                        <a href="{% url 'learning:admin_quiz_review' attempt.id %}" class="btn btn-primary"
+                            style="padding: 0.5rem 1.2rem; font-size: 0.9rem;">
+                            Review Answers
+                        </a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+    <div class="glass-panel" style="text-align: center; padding: 4rem;">
+        <div style="font-size: 4rem; margin-bottom: 1rem;">🎉</div>
+        <h2 style="color: var(--text-muted);">All caught up!</h2>
+        <p style="margin-top: 1rem;">There are no quiz attempts pending review at the moment.</p>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

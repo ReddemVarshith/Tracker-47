@@ -1,0 +1,504 @@
+{
+    "module_id": 43,
+    "questions": [
+        {
+            "text": "What does 'flow of program' refer to?",
+            "type": "MCQ",
+            "explanation": "The flow of a program describes the sequence in which statements are executed. By default programs run sequentially unless control structures like conditions or loops modify the execution.",
+            "choices": [
+                {
+                    "text": "The order in which statements execute",
+                    "is_correct": true
+                },
+                {
+                    "text": "The memory used by a program",
+                    "is_correct": false
+                },
+                {
+                    "text": "The number of variables in a program",
+                    "is_correct": false
+                },
+                {
+                    "text": "The compilation process",
+                    "is_correct": false
+                }
+            ]
+        },
+        {
+            "text": "Which is the default execution flow of any program?",
+            "type": "MCQ",
+            "explanation": "Programs normally execute sequentially from top to bottom unless altered by conditional or looping statements.",
+            "choices": [
+                {
+                    "text": "Sequential flow",
+                    "is_correct": true
+                },
+                {
+                    "text": "Loop flow",
+                    "is_correct": false
+                },
+                {
+                    "text": "Conditional flow",
+                    "is_correct": false
+                },
+                {
+                    "text": "Random flow",
+                    "is_correct": false
+                }
+            ]
+        },
+        {
+            "text": "Which structure is used to make decisions in a program?",
+            "type": "MCQ",
+            "explanation": "Conditional statements like if or switch allow a program to execute different code depending on a condition.",
+            "choices": [
+                {
+                    "text": "if statement",
+                    "is_correct": true
+                },
+                {
+                    "text": "loop",
+                    "is_correct": false
+                },
+                {
+                    "text": "variable",
+                    "is_correct": false
+                },
+                {
+                    "text": "function",
+                    "is_correct": false
+                }
+            ]
+        },
+        {
+            "text": "Which of the following is NOT a control flow mechanism?",
+            "type": "MCQ",
+            "explanation": "Control flow mechanisms include conditionals and loops. Variables only store data and do not control execution.",
+            "choices": [
+                {
+                    "text": "Variable declaration",
+                    "is_correct": true
+                },
+                {
+                    "text": "If statement",
+                    "is_correct": false
+                },
+                {
+                    "text": "Loop",
+                    "is_correct": false
+                },
+                {
+                    "text": "Switch",
+                    "is_correct": false
+                }
+            ]
+        },
+        {
+            "text": "What is a flowchart?",
+            "type": "MCQ",
+            "explanation": "A flowchart is a graphical representation of an algorithm using standard symbols to visualize the program logic.",
+            "choices": [
+                {
+                    "text": "Graphical representation of program logic",
+                    "is_correct": true
+                },
+                {
+                    "text": "Programming language",
+                    "is_correct": false
+                },
+                {
+                    "text": "Code compiler",
+                    "is_correct": false
+                },
+                {
+                    "text": "Memory diagram",
+                    "is_correct": false
+                }
+            ]
+        },
+        {
+            "text": "Which shape represents a process in a flowchart?",
+            "type": "MCQ",
+            "explanation": "A rectangle represents a process or instruction step in a flowchart.",
+            "choices": [
+                {
+                    "text": "Rectangle",
+                    "is_correct": true
+                },
+                {
+                    "text": "Diamond",
+                    "is_correct": false
+                },
+                {
+                    "text": "Oval",
+                    "is_correct": false
+                },
+                {
+                    "text": "Arrow",
+                    "is_correct": false
+                }
+            ]
+        },
+        {
+            "text": "Which shape represents a decision in a flowchart?",
+            "type": "MCQ",
+            "explanation": "A diamond is used to represent a decision point where the flow branches depending on a condition.",
+            "choices": [
+                {
+                    "text": "Diamond",
+                    "is_correct": true
+                },
+                {
+                    "text": "Rectangle",
+                    "is_correct": false
+                },
+                {
+                    "text": "Oval",
+                    "is_correct": false
+                },
+                {
+                    "text": "Circle",
+                    "is_correct": false
+                }
+            ]
+        },
+        {
+            "text": "Which shape represents the start or end of a program in a flowchart?",
+            "type": "MCQ",
+            "explanation": "An oval (terminator symbol) is used to indicate the start or end of the program flow.",
+            "choices": [
+                {
+                    "text": "Oval",
+                    "is_correct": true
+                },
+                {
+                    "text": "Rectangle",
+                    "is_correct": false
+                },
+                {
+                    "text": "Diamond",
+                    "is_correct": false
+                },
+                {
+                    "text": "Arrow",
+                    "is_correct": false
+                }
+            ]
+        },
+        {
+            "text": "What is pseudocode?",
+            "type": "MCQ",
+            "explanation": "Pseudocode is an informal way of writing algorithms using plain language that resembles programming logic.",
+            "choices": [
+                {
+                    "text": "A human-readable description of algorithm steps",
+                    "is_correct": true
+                },
+                {
+                    "text": "Machine code",
+                    "is_correct": false
+                },
+                {
+                    "text": "A programming language",
+                    "is_correct": false
+                },
+                {
+                    "text": "Binary instructions",
+                    "is_correct": false
+                }
+            ]
+        },
+        {
+            "text": "Which keyword is used to terminate a loop early?",
+            "type": "MCQ",
+            "explanation": "The break statement exits the loop immediately and continues execution after the loop.",
+            "choices": [
+                {
+                    "text": "break",
+                    "is_correct": true
+                },
+                {
+                    "text": "continue",
+                    "is_correct": false
+                },
+                {
+                    "text": "pass",
+                    "is_correct": false
+                },
+                {
+                    "text": "exit",
+                    "is_correct": false
+                }
+            ]
+        },
+        {
+            "text": "Which keyword skips the remaining code in the current loop iteration?",
+            "type": "MCQ",
+            "explanation": "Continue skips the current iteration and proceeds with the next iteration of the loop.",
+            "choices": [
+                {
+                    "text": "continue",
+                    "is_correct": true
+                },
+                {
+                    "text": "break",
+                    "is_correct": false
+                },
+                {
+                    "text": "return",
+                    "is_correct": false
+                },
+                {
+                    "text": "stop",
+                    "is_correct": false
+                }
+            ]
+        },
+        {
+            "text": "Which loop is generally used when the number of iterations is known?",
+            "type": "MCQ",
+            "explanation": "A for loop is commonly used when the iteration count is known beforehand.",
+            "choices": [
+                {
+                    "text": "for loop",
+                    "is_correct": true
+                },
+                {
+                    "text": "while loop",
+                    "is_correct": false
+                },
+                {
+                    "text": "do-while loop",
+                    "is_correct": false
+                },
+                {
+                    "text": "recursive loop",
+                    "is_correct": false
+                }
+            ]
+        },
+        {
+            "text": "What will be printed?\\nfor(int i =0 ; i<3 ; i++) {\\n    System.out.println(i);\\n}",
+            "type": "MCQ",
+            "explanation": "range(3) generates numbers 0, 1, and 2.",
+            "choices": [
+                {
+                    "text": "0 1 2",
+                    "is_correct": true
+                },
+                {
+                    "text": "1 2 3",
+                    "is_correct": false
+                },
+                {
+                    "text": "0 1 2 3",
+                    "is_correct": false
+                },
+                {
+                    "text": "3 2 1",
+                    "is_correct": false
+                }
+            ]
+        },
+        {
+            "text": "What is an infinite loop?",
+            "type": "MCQ",
+            "explanation": "An infinite loop continues forever because the terminating condition never becomes false.",
+            "choices": [
+                {
+                    "text": "A loop that never ends",
+                    "is_correct": true
+                },
+                {
+                    "text": "A loop with zero iterations",
+                    "is_correct": false
+                },
+                {
+                    "text": "A loop inside another loop",
+                    "is_correct": false
+                },
+                {
+                    "text": "A loop without variables",
+                    "is_correct": false
+                }
+            ]
+        },
+        {
+            "text": "Which statement does nothing but is syntactically required?",
+            "type": "MCQ",
+            "explanation": "The pass statement acts as a placeholder when no operation is needed.",
+            "choices": [
+                {
+                    "text": "pass",
+                    "is_correct": true
+                },
+                {
+                    "text": "break",
+                    "is_correct": false
+                },
+                {
+                    "text": "continue",
+                    "is_correct": false
+                },
+                {
+                    "text": "return",
+                    "is_correct": false
+                }
+            ]
+        },
+        {
+            "text": "Nested conditions refer to:",
+            "type": "MCQ",
+            "explanation": "Nested conditions occur when one if statement is placed inside another.",
+            "choices": [
+                {
+                    "text": "An if statement inside another if",
+                    "is_correct": true
+                },
+                {
+                    "text": "Multiple loops",
+                    "is_correct": false
+                },
+                {
+                    "text": "Parallel execution",
+                    "is_correct": false
+                },
+                {
+                    "text": "Function recursion",
+                    "is_correct": false
+                }
+            ]
+        },
+        {
+            "text": "What is the main advantage of flowcharts?",
+            "type": "MCQ",
+            "explanation": "Flowcharts make algorithms easier to visualize and understand before writing code.",
+            "choices": [
+                {
+                    "text": "Visual representation of logic",
+                    "is_correct": true
+                },
+                {
+                    "text": "Faster compilation",
+                    "is_correct": false
+                },
+                {
+                    "text": "Better memory usage",
+                    "is_correct": false
+                },
+                {
+                    "text": "Automatic debugging",
+                    "is_correct": false
+                }
+            ]
+        },
+        {
+            "text": "Arrows in a flowchart represent:",
+            "type": "MCQ",
+            "explanation": "Arrows indicate the direction of control flow between steps.",
+            "choices": [
+                {
+                    "text": "Flow direction",
+                    "is_correct": true
+                },
+                {
+                    "text": "Memory usage",
+                    "is_correct": false
+                },
+                {
+                    "text": "Loop counter",
+                    "is_correct": false
+                },
+                {
+                    "text": "Function call",
+                    "is_correct": false
+                }
+            ]
+        },
+        {
+            "text": "Control flow statements help to:",
+            "type": "MCQ",
+            "explanation": "They determine the order in which program instructions are executed.",
+            "choices": [
+                {
+                    "text": "Control execution order",
+                    "is_correct": true
+                },
+                {
+                    "text": "Store values",
+                    "is_correct": false
+                },
+                {
+                    "text": "Allocate memory",
+                    "is_correct": false
+                },
+                {
+                    "text": "Compile programs",
+                    "is_correct": false
+                }
+            ]
+        },
+        {
+            "text": "What happens if an if condition is false and no else exists?",
+            "type": "MCQ",
+            "explanation": "The program simply skips the if block and moves to the next statement.",
+            "choices": [
+                {
+                    "text": "Program continues normally",
+                    "is_correct": true
+                },
+                {
+                    "text": "Program crashes",
+                    "is_correct": false
+                },
+                {
+                    "text": "Program loops forever",
+                    "is_correct": false
+                },
+                {
+                    "text": "Compiler error occurs",
+                    "is_correct": false
+                }
+            ]
+        },
+        {
+            "text": "Explain what is meant by the flow of a program.",
+            "type": "DESCRIPTIVE",
+            "explanation": "Students should explain how instructions are executed in a specific order and how control structures modify this sequence."
+        },
+        {
+            "text": "What are flowcharts and why are they useful?",
+            "type": "DESCRIPTIVE",
+            "explanation": "Flowcharts visually represent algorithms using standardized symbols which help in understanding program logic."
+        },
+        {
+            "text": "Explain pseudocode and its advantages.",
+            "type": "DESCRIPTIVE",
+            "explanation": "Pseudocode is a structured description of an algorithm using simple language that helps plan program logic."
+        },
+        {
+            "text": "Describe the difference between sequential flow and conditional flow.",
+            "type": "DESCRIPTIVE",
+            "explanation": "Sequential flow executes statements in order while conditional flow chooses execution paths based on conditions."
+        },
+        {
+            "text": "Explain how loops change the flow of a program.",
+            "type": "DESCRIPTIVE",
+            "explanation": "Loops allow repeated execution of code blocks until a condition becomes false."
+        },
+        {
+            "text": "Input a year and determine whether it is a leap year or not.",
+            "type": "CODING",
+            "initial_code": "def solution():\\n    # Read input year\\n    # Determine leap year\\n    # Print result",
+            "expected_output": "Print 'Leap Year' or 'Not Leap Year'.",
+            "explanation": "A leap year is divisible by 4 but not by 100 unless it is also divisible by 400."
+        },
+        {
+            "text": "Find the HCF (GCD) and LCM of two numbers.",
+            "type": "CODING",
+            "initial_code": "def solution():\\n    # Read two integers\\n    # Compute HCF and LCM\\n    # Print both",
+            "expected_output": "Print HCF and LCM of the given numbers.",
+            "explanation": "Use Euclidean algorithm for HCF and compute LCM using LCM = (a * b) / HCF."
+        }
+    ]
+}

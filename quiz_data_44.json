@@ -1,0 +1,573 @@
+{
+    "module_id": 44,
+    "questions": [
+        {
+            "text": "What is the entry point of a Java program?",
+            "type": "MCQ",
+            "explanation": "The 'main' method (public static void main) is where Java programs begin execution.",
+            "choices": [
+                {
+                    "text": "main method",
+                    "is_correct": true
+                },
+                {
+                    "text": "init method",
+                    "is_correct": false
+                },
+                {
+                    "text": "start method",
+                    "is_correct": false
+                },
+                {
+                    "text": "run method",
+                    "is_correct": false
+                }
+            ]
+        },
+        {
+            "text": "Which company developed Java?",
+            "type": "MCQ",
+            "explanation": "Java was developed by Sun Microsystems (later acquired by Oracle).",
+            "choices": [
+                {
+                    "text": "Sun Microsystems",
+                    "is_correct": true
+                },
+                {
+                    "text": "Microsoft",
+                    "is_correct": false
+                },
+                {
+                    "text": "Google",
+                    "is_correct": false
+                },
+                {
+                    "text": "IBM",
+                    "is_correct": false
+                }
+            ]
+        },
+        {
+            "text": "Which of these is NOT a primitive data type in Java?",
+            "type": "MCQ",
+            "explanation": "String is a class/object in Java, not a primitive type like int, boolean, or char.",
+            "choices": [
+                {
+                    "text": "String",
+                    "is_correct": true
+                },
+                {
+                    "text": "int",
+                    "is_correct": false
+                },
+                {
+                    "text": "boolean",
+                    "is_correct": false
+                },
+                {
+                    "text": "char",
+                    "is_correct": false
+                }
+            ]
+        },
+        {
+            "text": "What is the size of an int in Java?",
+            "type": "MCQ",
+            "explanation": "In Java, an int is 32 bits (4 bytes).",
+            "choices": [
+                {
+                    "text": "32 bits",
+                    "is_correct": true
+                },
+                {
+                    "text": "16 bits",
+                    "is_correct": false
+                },
+                {
+                    "text": "64 bits",
+                    "is_correct": false
+                },
+                {
+                    "text": "8 bits",
+                    "is_correct": false
+                }
+            ]
+        },
+        {
+            "text": "Which extension is used for Java source code files?",
+            "type": "MCQ",
+            "explanation": ".java is the extension used for source files containing Java code.",
+            "choices": [
+                {
+                    "text": ".java",
+                    "is_correct": true
+                },
+                {
+                    "text": ".class",
+                    "is_correct": false
+                },
+                {
+                    "text": ".jar",
+                    "is_correct": false
+                },
+                {
+                    "text": ".j",
+                    "is_correct": false
+                }
+            ]
+        },
+        {
+            "text": "What does JVM stand for?",
+            "type": "MCQ",
+            "explanation": "JVM stands for Java Virtual Machine.",
+            "choices": [
+                {
+                    "text": "Java Virtual Machine",
+                    "is_correct": true
+                },
+                {
+                    "text": "Java Visual Mode",
+                    "is_correct": false
+                },
+                {
+                    "text": "Java Variable Manager",
+                    "is_correct": false
+                },
+                {
+                    "text": "Java Virtual Memory",
+                    "is_correct": false
+                }
+            ]
+        },
+        {
+            "text": "Which operator is used to check equality in Java?",
+            "type": "MCQ",
+            "explanation": "== is used for comparison, whereas = is used for assignment.",
+            "choices": [
+                {
+                    "text": "==",
+                    "is_correct": true
+                },
+                {
+                    "text": "=",
+                    "is_correct": false
+                },
+                {
+                    "text": "equals",
+                    "is_correct": false
+                },
+                {
+                    "text": "===",
+                    "is_correct": false
+                }
+            ]
+        },
+        {
+            "text": "How do you declare a constant in Java?",
+            "type": "MCQ",
+            "explanation": "The 'final' keyword is used to declare constants in Java.",
+            "choices": [
+                {
+                    "text": "final",
+                    "is_correct": true
+                },
+                {
+                    "text": "const",
+                    "is_correct": false
+                },
+                {
+                    "text": "static",
+                    "is_correct": false
+                },
+                {
+                    "text": "constant",
+                    "is_correct": false
+                }
+            ]
+        },
+        {
+            "text": "What is the default value of a boolean variable in Java?",
+            "type": "MCQ",
+            "explanation": "Booleans default to 'false' if they are instance variables.",
+            "choices": [
+                {
+                    "text": "false",
+                    "is_correct": true
+                },
+                {
+                    "text": "true",
+                    "is_correct": false
+                },
+                {
+                    "text": "null",
+                    "is_correct": false
+                },
+                {
+                    "text": "0",
+                    "is_correct": false
+                }
+            ]
+        },
+        {
+            "text": "Which of these is a valid variable name in Java?",
+            "type": "MCQ",
+            "explanation": "Variable names cannot start with numbers and cannot be reserved keywords.",
+            "choices": [
+                {
+                    "text": "totalAmount",
+                    "is_correct": true
+                },
+                {
+                    "text": "2total",
+                    "is_correct": false
+                },
+                {
+                    "text": "class",
+                    "is_correct": false
+                },
+                {
+                    "text": "total-amount",
+                    "is_correct": false
+                }
+            ]
+        },
+        {
+            "text": "What is 'byte' range in Java?",
+            "type": "MCQ",
+            "explanation": "A byte is 8 bits signed, ranging from -128 to 127.",
+            "choices": [
+                {
+                    "text": "-128 to 127",
+                    "is_correct": true
+                },
+                {
+                    "text": "-256 to 255",
+                    "is_correct": false
+                },
+                {
+                    "text": "0 to 255",
+                    "is_correct": false
+                },
+                {
+                    "text": "-32768 to 32767",
+                    "is_correct": false
+                }
+            ]
+        },
+        {
+            "text": "Which method is used to print to the console with a newline?",
+            "type": "MCQ",
+            "explanation": "System.out.println() prints the text followed by a new line.",
+            "choices": [
+                {
+                    "text": "System.out.println()",
+                    "is_correct": true
+                },
+                {
+                    "text": "System.out.print()",
+                    "is_correct": false
+                },
+                {
+                    "text": "console.log()",
+                    "is_correct": false
+                },
+                {
+                    "text": "print()",
+                    "is_correct": false
+                }
+            ]
+        },
+        {
+            "text": "Which class is used to take user input in Java?",
+            "type": "MCQ",
+            "explanation": "Scanner is commonly used to read input from various sources like System.in.",
+            "choices": [
+                {
+                    "text": "Scanner",
+                    "is_correct": true
+                },
+                {
+                    "text": "Input",
+                    "is_correct": false
+                },
+                {
+                    "text": "Reader",
+                    "is_correct": false
+                },
+                {
+                    "text": "Buffer",
+                    "is_correct": false
+                }
+            ]
+        },
+        {
+            "text": "Which of these is a comments type in Java?",
+            "type": "MCQ",
+            "explanation": "Java supports // for single line and /* */ for multi-line comments.",
+            "choices": [
+                {
+                    "text": "// and /* */",
+                    "is_correct": true
+                },
+                {
+                    "text": "#",
+                    "is_correct": false
+                },
+                {
+                    "text": "<!-- -->",
+                    "is_correct": false
+                },
+                {
+                    "text": "**",
+                    "is_correct": false
+                }
+            ]
+        },
+        {
+            "text": "Which command is used to compile a Java file?",
+            "type": "MCQ",
+            "explanation": "javac is the Java Compiler command.",
+            "choices": [
+                {
+                    "text": "javac",
+                    "is_correct": true
+                },
+                {
+                    "text": "java",
+                    "is_correct": false
+                },
+                {
+                    "text": "compile",
+                    "is_correct": false
+                },
+                {
+                    "text": "run",
+                    "is_correct": false
+                }
+            ]
+        },
+        {
+            "text": "What is the range of a char in Java?",
+            "type": "MCQ",
+            "explanation": "Java char uses 16-bit Unicode (0 to 65535).",
+            "choices": [
+                {
+                    "text": "0 to 65535",
+                    "is_correct": true
+                },
+                {
+                    "text": "-127 to 128",
+                    "is_correct": false
+                },
+                {
+                    "text": "0 to 255",
+                    "is_correct": false
+                },
+                {
+                    "text": "varies",
+                    "is_correct": false
+                }
+            ]
+        },
+        {
+            "text": "What is literal in Java?",
+            "type": "MCQ",
+            "explanation": "A literal is a fixed value represented directly in source code.",
+            "choices": [
+                {
+                    "text": "A fixed value in source code",
+                    "is_correct": true
+                },
+                {
+                    "text": "A variable name",
+                    "is_correct": false
+                },
+                {
+                    "text": "A method name",
+                    "is_correct": false
+                },
+                {
+                    "text": "A class name",
+                    "is_correct": false
+                }
+            ]
+        },
+        {
+            "text": "Implicit type casting is also known as:",
+            "type": "MCQ",
+            "explanation": "Widening casting happens when converting a smaller type to a larger type automatically.",
+            "choices": [
+                {
+                    "text": "Widening",
+                    "is_correct": true
+                },
+                {
+                    "text": "Narrowing",
+                    "is_correct": false
+                },
+                {
+                    "text": "Explicit",
+                    "is_correct": false
+                },
+                {
+                    "text": "Manual",
+                    "is_correct": false
+                }
+            ]
+        },
+        {
+            "text": "Which data type is used to store decimal numbers?",
+            "type": "MCQ",
+            "explanation": "double and float are used for floating-point numbers in Java.",
+            "choices": [
+                {
+                    "text": "double",
+                    "is_correct": true
+                },
+                {
+                    "text": "int",
+                    "is_correct": false
+                },
+                {
+                    "text": "long",
+                    "is_correct": false
+                },
+                {
+                    "text": "boolean",
+                    "is_correct": false
+                }
+            ]
+        },
+        {
+            "text": "Java is short for:",
+            "type": "MCQ",
+            "explanation": "Java is just a name, named after Java Coffee, not an acronym.",
+            "choices": [
+                {
+                    "text": "It is not an abbreviation",
+                    "is_correct": true
+                },
+                {
+                    "text": "Just Another Virtual Access",
+                    "is_correct": false
+                },
+                {
+                    "text": "Joined Advanced Virtual App",
+                    "is_correct": false
+                },
+                {
+                    "text": "Justified Application",
+                    "is_correct": false
+                }
+            ]
+        },
+        {
+            "text": "What is the size of boolean in Java?",
+            "type": "MCQ",
+            "explanation": "Technically virtual machine dependent, but logically represents 1 bit.",
+            "choices": [
+                {
+                    "text": "VM dependent",
+                    "is_correct": true
+                },
+                {
+                    "text": "1 bit",
+                    "is_correct": false
+                },
+                {
+                    "text": "8 bits",
+                    "is_correct": false
+                },
+                {
+                    "text": "32 bits",
+                    "is_correct": false
+                }
+            ]
+        },
+        {
+            "text": "Which data type should be used for high precision currency calculations?",
+            "type": "MCQ",
+            "explanation": "BigDecimal is preferred for precise currency and scientific calculations.",
+            "choices": [
+                {
+                    "text": "BigDecimal",
+                    "is_correct": true
+                },
+                {
+                    "text": "double",
+                    "is_correct": false
+                },
+                {
+                    "text": "float",
+                    "is_correct": false
+                },
+                {
+                    "text": "long",
+                    "is_correct": false
+                }
+            ]
+        },
+        {
+            "text": "Static variables are shared among:",
+            "type": "MCQ",
+            "explanation": "Static variables belong to the class and are shared by all instances of that class.",
+            "choices": [
+                {
+                    "text": "All instances of the class",
+                    "is_correct": true
+                },
+                {
+                    "text": "Only one instance",
+                    "is_correct": false
+                },
+                {
+                    "text": "Different classes",
+                    "is_correct": false
+                },
+                {
+                    "text": "No instances",
+                    "is_correct": false
+                }
+            ]
+        },
+        {
+            "text": "Explain the difference between JDK, JRE, and JVM.",
+            "type": "DESCRIPTIVE",
+            "explanation": "JVM runs bytecode, JRE provides libraries to run, JDK provides tools to develop and run."
+        },
+        {
+            "text": "What are primitive and non-primitive data types in Java?",
+            "type": "DESCRIPTIVE",
+            "explanation": "Primitives are predefined basic types (int, char). Non-primitives are user-defined or class-based (String, Arrays)."
+        },
+        {
+            "text": "Explain Type Casting in Java with examples.",
+            "type": "DESCRIPTIVE",
+            "explanation": "Discuss Widening (auto) and Narrowing (manual) conversions."
+        },
+        {
+            "text": "What is the use of the Scanner class and how do you use it?",
+            "type": "DESCRIPTIVE",
+            "explanation": "Explain importing java.util.Scanner and using methods like nextInt(), nextLine()."
+        },
+        {
+            "text": "Describe the basic structure of a Java program.",
+            "type": "DESCRIPTIVE",
+            "explanation": "Discuss packages, imports, class declarations, and the main method."
+        },
+        {
+            "text": "Write a program to input a name and print a greeting message.",
+            "type": "CODING",
+            "initial_code": "import java.util.Scanner;\\npublic class Main {\\n    public static void main(String[] args) {\\n        Scanner sc = new Scanner(System.in);\\n        // solve here\\n    }\\n}",
+            "expected_output": "Hello Name!",
+            "explanation": "Use Scanner to read a string and print it concatenated with 'Hello '."
+        },
+        {
+            "text": "Write a program to calculate Simple Interest.",
+            "type": "CODING",
+            "initial_code": "import java.util.Scanner;\\npublic class Main {\\n    public static void main(String[] args) {\\n        Scanner sc = new Scanner(System.in);\\n        // solve here (P, T, R)\\n    }\\n}",
+            "expected_output": "Simple Interest value",
+            "explanation": "SI = (P * T * R) / 100."
+        }
+    ]
+}

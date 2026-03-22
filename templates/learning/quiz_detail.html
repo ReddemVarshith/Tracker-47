@@ -1,0 +1,282 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<style>
+    /* Anti-copying measures */
+    body {
+        user-select: none;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+    }
+
+    .no-copy {
+        user-select: none !important;
+    }
+
+    .quiz-section {
+        display: none;
+    }
+
+    .quiz-section.active {
+        display: block;
+    }
+
+    .step-indicator {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 2rem;
+        gap: 2rem;
+    }
+
+    .step-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        color: var(--text-muted);
+        transition: all 0.3s;
+    }
+
+    .step-item.active {
+        color: var(--primary);
+    }
+
+    .step-dot {
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        background: currentColor;
+        margin-bottom: 0.5rem;
+    }
+</style>
+
+<div class="container" style="max-width: 900px; margin: 0 auto; padding-bottom: 5rem;">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+        <div>
+            <h1 style="font-size: 2rem; margin-bottom: 0.5rem;">{{ module.title }} Quiz</h1>
+            <p style="color: var(--text-muted);">{{ questions.count }} Questions • 3 Sections</p>
+        </div>
+        <div class="glass-panel" style="padding: 1rem; text-align: center; border: 1px solid var(--primary);">
+            <div id="countdown"
+                style="font-size: 1.5rem; font-weight: bold; font-family: monospace; color: var(--primary);">--:--</div>
+            <div style="font-size: 0.8rem; color: var(--text-muted);">TIME REMAINING</div>
+        </div>
+    </div>
+
+    <div class="step-indicator">
+        <div class="step-item active" id="step-1">
+            <div class="step-dot"></div>
+            <span>MCQs</span>
+        </div>
+        <div class="step-item" id="step-2">
+            <div class="step-dot"></div>
+            <span>Descriptive</span>
+        </div>
+        <div class="step-item" id="step-3">
+            <div class="step-dot"></div>
+            <span>Coding</span>
+        </div>
+    </div>
+
+    <form id="quiz-form">
+        {% csrf_token %}
+
+        <!-- Section: MCQs -->
+        <div class="quiz-section active" id="section-1">
+            <h2 style="margin-bottom: 2rem; color: var(--text-main);">Section 1: Multiple Choice Problems</h2>
+            {% for question in questions %}
+            {% if question.question_type == 'MCQ' %}
+            <div class="glass-panel fade-in no-copy" style="padding: 2rem; margin-bottom: 2rem; position: relative;"
+                data-question-id="{{ question.id }}">
+                <div style="position: absolute; top: 1rem; right: 1rem; color: var(--text-muted); font-size: 0.9rem;">
+                    MCQ</div>
+                <h3 style="margin-bottom: 1.5rem; line-height: 1.4;">{{ question.text }}</h3>
+                <div class="choices-container">
+                    {% for choice in question.randomized_choices %}
+                    <label class="glass-card"
+                        style="display: block; padding: 1rem; margin-bottom: 0.75rem; cursor: pointer; transition: all 0.2s;">
+                        <input type="radio" name="q{{ question.id }}" value="{{ choice.id }}"
+                            style="margin-right: 1rem;">
+                        {{ choice.text }}
+                    </label>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+            {% endfor %}
+            <div style="text-align: center; margin-top: 2rem;">
+                <button type="button" class="btn btn-primary next-section" data-next="2"
+                    style="padding: 0.8rem 2.5rem;">Next: Descriptive Questions &rarr;</button>
+            </div>
+        </div>
+
+        <!-- Section: Descriptive -->
+        <div class="quiz-section" id="section-2">
+            <h2 style="margin-bottom: 2rem; color: var(--text-main);">Section 2: Descriptive Theory</h2>
+            {% for question in questions %}
+            {% if question.question_type == 'DESCRIPTIVE' %}
+            <div class="glass-panel fade-in no-copy" style="padding: 2rem; margin-bottom: 2rem; position: relative;"
+                data-question-id="{{ question.id }}">
+                <div style="position: absolute; top: 1rem; right: 1rem; color: var(--text-muted); font-size: 0.9rem;">
+                    DESCRIPTIVE</div>
+                <h3 style="margin-bottom: 1.5rem; line-height: 1.4;">{{ question.text }}</h3>
+                <textarea name="q{{ question.id }}" class="glass-card"
+                    style="width: 100%; border: none; padding: 1rem; color: white; border-radius: 8px; font-family: inherit; background: rgba(255,255,255,0.05);"
+                    rows="5" placeholder="Your explanation..."></textarea>
+            </div>
+            {% endif %}
+            {% endfor %}
+            <div style="text-align: center; margin-top: 2rem; display: flex; justify-content: center; gap: 1rem;">
+                <button type="button" class="btn btn-outline prev-section" data-prev="1">Back</button>
+                <button type="button" class="btn btn-primary next-section" data-next="3"
+                    style="padding: 0.8rem 2.5rem;">Next: Coding Problems &rarr;</button>
+            </div>
+        </div>
+
+        <!-- Section: Coding -->
+        <div class="quiz-section" id="section-3">
+            <h2 style="margin-bottom: 2rem; color: var(--text-main);">Section 3: Practical Coding</h2>
+            {% for question in questions %}
+            {% if question.question_type == 'CODING' %}
+            <div class="glass-panel fade-in no-copy" style="padding: 2rem; margin-bottom: 2rem; position: relative;"
+                data-question-id="{{ question.id }}">
+                <div style="position: absolute; top: 1rem; right: 1rem; color: var(--text-muted); font-size: 0.9rem;">
+                    CODING</div>
+                <h3 style="margin-bottom: 1.5rem; line-height: 1.4;">{{ question.text }}</h3>
+                <div class="coding-interface"
+                    style="background: #1e1e1e; border-radius: 8px; overflow: hidden; border: 1px solid rgba(255,255,255,0.1);">
+                    <textarea name="q{{ question.id }}"
+                        style="width: 100%; height: 250px; background: transparent; color: #d4d4d4; border: none; padding: 1rem; font-family: 'Fira Code', 'Courier New', monospace; resize: vertical;">{{ question.initial_code }}</textarea>
+                </div>
+            </div>
+            {% endif %}
+            {% endfor %}
+            <div style="text-align: center; margin-top: 2rem; display: flex; justify-content: center; gap: 1rem;">
+                <button type="button" class="btn btn-outline prev-section" data-prev="2">Back</button>
+                <button type="button" id="submit-quiz" class="btn btn-primary"
+                    style="padding: 0.8rem 3rem; font-weight: bold; background: var(--success); border-color: var(--success);">Finish
+                    & Submit Quiz</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+<script>
+    // Anti-copying measures
+    document.addEventListener('contextmenu', e => e.preventDefault());
+    document.addEventListener('keydown', e => {
+        if (e.ctrlKey && ['c', 'v', 'u', 's', 'p', 'a'].includes(e.key.toLowerCase())) e.preventDefault();
+    });
+
+    // Sections Navigation
+    const sections = document.querySelectorAll('.quiz-section');
+    const items = document.querySelectorAll('.step-item');
+
+    document.querySelectorAll('.next-section').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const next = btn.dataset.next;
+            showSection(next);
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+    });
+
+    document.querySelectorAll('.prev-section').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const prev = btn.dataset.prev;
+            showSection(prev);
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+    });
+
+    function showSection(num) {
+        sections.forEach(s => s.classList.remove('active'));
+        items.forEach(i => i.classList.remove('active'));
+        document.getElementById(`section-${num}`).classList.add('active');
+        document.getElementById(`step-${num}`).classList.add('active');
+    }
+
+    // Timer Logic
+    let timeLeft = {{ quiz.time_limit }} * 60;
+    const countdownEl = document.getElementById('countdown');
+
+    const timer = setInterval(() => {
+        const mins = Math.floor(timeLeft / 60);
+        const secs = timeLeft % 60;
+        countdownEl.innerText = `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+
+        if (timeLeft <= 60) countdownEl.style.color = '#ef4444';
+
+        if (timeLeft <= 0) {
+            clearInterval(timer);
+            alert("Time is up! Submitting your answers automatically.");
+            submitQuiz();
+        }
+        timeLeft--;
+    }, 1000);
+
+    // MCQ Styling
+    document.querySelectorAll('input[type="radio"]').forEach(radio => {
+        radio.addEventListener('change', function () {
+            const container = this.closest('.choices-container');
+            container.querySelectorAll('label').forEach(label => {
+                label.style.background = 'rgba(255, 255, 255, 0.05)';
+                label.style.borderColor = 'transparent';
+            });
+            if (this.checked) {
+                this.parentElement.style.background = 'rgba(168, 85, 247, 0.2)';
+                this.parentElement.style.borderColor = 'var(--primary)';
+            }
+        });
+    });
+
+    // Submission Logic
+    document.getElementById('submit-quiz').addEventListener('click', () => {
+        if (confirm("Are you sure you want to finish and submit?")) {
+            submitQuiz();
+        }
+    });
+
+    async function submitQuiz() {
+        clearInterval(timer);
+        const btn = document.getElementById('submit-quiz');
+        btn.disabled = true;
+        btn.innerText = "Submitting...";
+
+        const answers = {};
+        document.querySelectorAll('[data-question-id]').forEach(qPanel => {
+            const qId = qPanel.dataset.questionId;
+            const radio = qPanel.querySelector(`input[name="q${qId}"]:checked`);
+            const text = qPanel.querySelector(`textarea[name="q${qId}"]`);
+            if (radio) answers[qId] = radio.value;
+            else if (text) answers[qId] = text.value;
+        });
+
+        try {
+            const res = await fetch('{% url "learning:quiz_submit" module.id %}', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': '{{ csrf_token }}'
+                },
+                body: JSON.stringify({
+                    answers: answers,
+                    random_seed: {{ random_seed }}
+                })
+    });
+    const data = await res.json();
+    if (data.status === 'success') {
+        alert("Quiz submitted successfully! You will be redirected to the module page.");
+        window.location.href = `{% url "learning:module_detail" module.id %}`;
+    } else {
+        alert("Submission failed: " + data.message);
+        btn.disabled = false;
+    }
+        } catch (e) {
+        console.error(e);
+        alert("Network error during submission.");
+        btn.disabled = false;
+    }
+    }
+</script>
+{% endblock %}

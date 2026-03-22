@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container" style="max-width: 900px; margin: 0 auto; padding-bottom: 5rem;">
+    <div class="glass-panel text-center" style="padding: 3rem; margin-bottom: 2rem; position: relative;">
+        {% if attempt.status == 'PENDING_REVIEW' %}
+        <div class="badge" style="position: absolute; top: 1rem; right: 1rem; background: #f59e0b;">PENDING REVIEW</div>
+        {% endif %}
+        <h1 style="font-size: 2.5rem; margin-bottom: 1rem;">Quiz Results</h1>
+        <div style="font-size: 4rem; font-weight: bold; color: var(--primary); margin-bottom: 0.5rem;">
+            {{ attempt.score }} / {{ attempt.total_questions }}
+        </div>
+        <div style="font-size: 1.2rem; color: var(--text-muted); margin-bottom: 2rem;">
+            Score: {{ percentage }}%
+            {% if attempt.status == 'PENDING_REVIEW' %}
+            <br><small>(Excludes unreviewed questions)</small>
+            {% endif %}
+        </div>
+
+        <div class="grid-2" style="max-width: 500px; margin: 0 auto;">
+            <a href="{% url 'learning:module_detail' attempt.quiz.module.id %}" class="btn btn-outline">Back to
+                Module</a>
+            <a href="{% url 'learning:quiz_history' %}" class="btn btn-primary">Quiz History</a>
+        </div>
+    </div>
+
+    <h2 style="margin-bottom: 2rem;">Review Answers</h2>
+
+    {% for response in responses %}
+    <div class="glass-panel"
+        style="padding: 2rem; margin-bottom: 2rem; border-left: 5px solid {% if not response.is_reviewed %}#f59e0b{% elif response.is_correct %}var(--success){% else %}var(--error){% endif %};">
+        <div class="badge" style="background: rgba(255,255,255,0.1); margin-bottom: 1rem;">
+            {{ response.question.get_question_type_display }}
+        </div>
+        <h3 style="margin-bottom: 1.5rem;">{{ response.question.text }}</h3>
+
+        {% if response.question.question_type == 'MCQ' %}
+        <div style="margin-bottom: 1.5rem;">
+            {% for choice in response.question.randomized_choices %}
+            <div class="glass-card"
+                style="padding: 0.75rem 1rem; margin-bottom: 0.5rem; {% if choice.is_correct %} border: 1px solid var(--success); background: rgba(34, 197, 94, 0.1); {% endif %} {% if response.selected_choice == choice and not choice.is_correct %} border: 1px solid var(--error); background: rgba(239, 68, 68, 0.1); {% endif %}">
+                <span style="margin-right: 0.5rem;">
+                    {% if choice.is_correct %}✓{% elif response.selected_choice == choice %}✗{% else %}○{% endif %}
+                </span>
+                {{ choice.text }}
+                {% if choice.is_correct %}
+                <span style="float: right; font-size: 0.8rem; color: var(--success);">Correct Answer</span>
+                {% endif %}
+                {% if response.selected_choice == choice and not choice.is_correct %}
+                <span style="float: right; font-size: 0.8rem; color: var(--error);">Your Choice</span>
+                {% endif %}
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="glass-card" style="padding: 1rem; margin-bottom: 1.5rem; background: rgba(255,255,255,0.05);">
+            <div style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 0.5rem;">YOUR ANSWER:</div>
+            <div style="white-space: pre-wrap; color: #fff;">{{ response.text_answer|default:"No answer provided." }}
+            </div>
+        </div>
+        {% endif %}
+
+        {% if response.question.explanation %}
+        <div
+            style="padding: 1rem; background: rgba(168, 85, 247, 0.1); border-radius: 8px; border-top: 2px solid var(--primary);">
+            <strong style="color: var(--primary); display: block; margin-bottom: 0.5rem;">EXPLANATION:</strong>
+            <p style="font-size: 0.95rem; line-height: 1.5;">{{ response.question.explanation }}</p>
+        </div>
+        {% endif %}
+    </div>
+    {% endfor %}
+
+    <div style="text-align: center; margin-top: 3rem;">
+        <a href="{% url 'learning:dashboard' %}" class="btn btn-outline">Return to Dashboard</a>
+    </div>
+</div>
+{% endblock %}

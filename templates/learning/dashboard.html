@@ -43,9 +43,27 @@
                 <span>Progress</span>
                 <span>{{ m_data.progress }}%</span>
             </div>
-            <div class="progress-container" style="margin-bottom: 1.5rem;">
+            <div class="progress-container" style="margin-bottom: 1rem;">
                 <div class="progress-bar" style="width: {{ m_data.progress }}%;"></div>
             </div>
+
+            {% if m_data.quiz_score is not None %}
+            <div
+                style="font-size: 0.85rem; margin-bottom: 1.5rem; display: flex; justify-content: space-between; align-items: center;">
+                <span style="color: var(--text-muted);">Quiz:
+                    {% if m_data.quiz_status == 'PENDING_REVIEW' %}
+                    <strong style="color: #f59e0b; font-style: italic;">Under Review</strong>
+                    {% else %}
+                    <strong style="color: var(--primary);">{{ m_data.quiz_score }}/{{ m_data.quiz_total }}</strong>
+                    {% endif %}
+                </span>
+                {% if m_data.quiz_status == 'PENDING_REVIEW' %}
+                <span class="badge" style="font-size: 0.7rem; background: #f59e0b; padding: 2px 6px;">Reviewing</span>
+                {% else %}
+                <span class="badge" style="font-size: 0.7rem; background: #10b981; padding: 2px 6px;">Done</span>
+                {% endif %}
+            </div>
+            {% endif %}
 
             <a href="{% url 'learning:module_detail' m_data.module.id %}" class="btn btn-outline"
                 style="width: 100%; text-align: center;">View Module</a>

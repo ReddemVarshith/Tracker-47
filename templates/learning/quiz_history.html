@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container" style="max-width: 1000px; margin: 0 auto; padding: 2rem;">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+        <h1 style="font-size: 2rem;">Quiz Attempt History</h1>
+        <a href="{% url 'learning:dashboard' %}" class="btn btn-outline">&larr; Back to Dashboard</a>
+    </div>
+
+    {% if attempts %}
+    <div class="glass-panel" style="overflow-x: auto;">
+        <table style="width: 100%; border-collapse: collapse; text-align: left;">
+            <thead>
+                <tr style="border-bottom: 1px solid rgba(255,255,255,0.1); color: var(--text-muted);">
+                    <th style="padding: 1rem;">Module</th>
+                    <th style="padding: 1rem;">Date</th>
+                    <th style="padding: 1rem;">Score</th>
+                    <th style="padding: 1rem;">Status</th>
+                    <th style="padding: 1rem;">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for attempt in attempts %}
+                <tr style="border-bottom: 1px solid rgba(255,255,255,0.05);">
+                    <td style="padding: 1rem; font-weight: bold;">{{ attempt.quiz.module.title }}</td>
+                    <td style="padding: 1rem; color: var(--text-muted);">{{ attempt.completed_at|date:"M d, Y H:i" }}</td>
+                    <td style="padding: 1rem;">
+                        {% if attempt.status == 'PENDING_REVIEW' %}
+                        <span style="color: #f59e0b; font-style: italic; font-size: 0.9rem;">Under Review</span>
+                        {% else %}
+                        <span style="font-size: 1.1rem; font-weight: bold; color: var(--primary);">{{ attempt.score }}</span> / {{ attempt.total_questions }}
+                        {% endif %}
+                    </td>
+                    <td style="padding: 1rem;">
+                        {% if attempt.status == 'PENDING_REVIEW' %}
+                        <span class="badge" style="background: #f59e0b; color: white;">Pending Review</span>
+                        {% else %}
+                        <span class="badge" style="background: #10b981; color: white;">Completed</span>
+                        {% endif %}
+                    </td>
+                    <td style="padding: 1rem;">
+                        {% if attempt.status == 'PENDING_REVIEW' %}
+                        <span class="btn btn-sm disabled"
+                            style="font-size: 0.8rem; padding: 0.4rem 1rem; opacity: 0.6; cursor: not-allowed; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: var(--text-muted);">Results
+                            Pending</span>
+                        {% else %}
+                        <a href="{% url 'learning:quiz_results' attempt.id %}" class="btn btn-primary btn-sm"
+                            style="font-size: 0.8rem; padding: 0.4rem 1rem;">View Results</a>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+    <div class="glass-panel" style="text-align: center; padding: 4rem;">
+        <h2 style="color: var(--text-muted);">No quiz attempts found yet.</h2>
+        <p style="margin-top: 1rem;">Go to a module and take a quiz to see your history here!</p>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

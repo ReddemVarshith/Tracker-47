@@ -1,0 +1,573 @@
+{
+    "module_id": 45,
+    "questions": [
+        {
+            "text": "Which statement is used to select one of many code blocks to be executed?",
+            "type": "MCQ",
+            "explanation": "The switch statement allows a variable to be tested for equality against a list of values.",
+            "choices": [
+                {
+                    "text": "switch",
+                    "is_correct": true
+                },
+                {
+                    "text": "if",
+                    "is_correct": false
+                },
+                {
+                    "text": "while",
+                    "is_correct": false
+                },
+                {
+                    "text": "for",
+                    "is_correct": false
+                }
+            ]
+        },
+        {
+            "text": "Which loop is guaranteed to execute at least once?",
+            "type": "MCQ",
+            "explanation": "A do-while loop checks the condition after executing the body, so it always runs at least once.",
+            "choices": [
+                {
+                    "text": "do-while",
+                    "is_correct": true
+                },
+                {
+                    "text": "while",
+                    "is_correct": false
+                },
+                {
+                    "text": "for",
+                    "is_correct": false
+                },
+                {
+                    "text": "if-else",
+                    "is_correct": false
+                }
+            ]
+        },
+        {
+            "text": "What is the purpose of the 'break' statement in a loop?",
+            "type": "MCQ",
+            "explanation": "Break exits the current loop or switch block immediately.",
+            "choices": [
+                {
+                    "text": "To terminate the loop",
+                    "is_correct": true
+                },
+                {
+                    "text": "To skip the current iteration",
+                    "is_correct": false
+                },
+                {
+                    "text": "To restart the loop",
+                    "is_correct": false
+                },
+                {
+                    "text": "To pause the loop",
+                    "is_correct": false
+                }
+            ]
+        },
+        {
+            "text": "What is the result of 10 > 5 && 5 < 2 in Java?",
+            "type": "MCQ",
+            "explanation": "10 > 5 is true, but 5 < 2 is false. true && false results in false.",
+            "choices": [
+                {
+                    "text": "false",
+                    "is_correct": true
+                },
+                {
+                    "text": "true",
+                    "is_correct": false
+                },
+                {
+                    "text": "error",
+                    "is_correct": false
+                },
+                {
+                    "text": "null",
+                    "is_correct": false
+                }
+            ]
+        },
+        {
+            "text": "Which keyword skips the current iteration of a loop?",
+            "type": "MCQ",
+            "explanation": "The 'continue' statement jumps to the next iteration of the loop.",
+            "choices": [
+                {
+                    "text": "continue",
+                    "is_correct": true
+                },
+                {
+                    "text": "break",
+                    "is_correct": false
+                },
+                {
+                    "text": "return",
+                    "is_correct": false
+                },
+                {
+                    "text": "stop",
+                    "is_correct": false
+                }
+            ]
+        },
+        {
+            "text": "In a switch statement, what is the 'default' case used for?",
+            "type": "MCQ",
+            "explanation": "The default case executes if none of the specific cases match.",
+            "choices": [
+                {
+                    "text": "Executes if no case matches",
+                    "is_correct": true
+                },
+                {
+                    "text": "Always executes",
+                    "is_correct": false
+                },
+                {
+                    "text": "Stops the switch block",
+                    "is_correct": false
+                },
+                {
+                    "text": "Is the first case to run",
+                    "is_correct": false
+                }
+            ]
+        },
+        {
+            "text": "What is the output of: for(int i=0; i<3; i++) { System.out.print(i); }",
+            "type": "MCQ",
+            "explanation": "The loop runs for i=0, 1, 2. Printing 012.",
+            "choices": [
+                {
+                    "text": "012",
+                    "is_correct": true
+                },
+                {
+                    "text": "123",
+                    "is_correct": false
+                },
+                {
+                    "text": "0123",
+                    "is_correct": false
+                },
+                {
+                    "text": "321",
+                    "is_correct": false
+                }
+            ]
+        },
+        {
+            "text": "Which expression is equivalent to ! (A && B)?",
+            "type": "MCQ",
+            "explanation": "By De Morgan's Law, NOT (A AND B) is equivalent to (NOT A) OR (NOT B).",
+            "choices": [
+                {
+                    "text": "!A || !B",
+                    "is_correct": true
+                },
+                {
+                    "text": "!A && !B",
+                    "is_correct": false
+                },
+                {
+                    "text": "A || B",
+                    "is_correct": false
+                },
+                {
+                    "text": "!A | !B",
+                    "is_correct": false
+                }
+            ]
+        },
+        {
+            "text": "How many times will a 'while(false)' loop execute?",
+            "type": "MCQ",
+            "explanation": "A while loop checks the condition before the first execution, so it won't run at all.",
+            "choices": [
+                {
+                    "text": "0",
+                    "is_correct": true
+                },
+                {
+                    "text": "1",
+                    "is_correct": false
+                },
+                {
+                    "text": "Infinite",
+                    "is_correct": false
+                },
+                {
+                    "text": "Error",
+                    "is_correct": false
+                }
+            ]
+        },
+        {
+            "text": "Which operator is the logical OR operator in Java?",
+            "type": "MCQ",
+            "explanation": "|| is the logical OR operator.",
+            "choices": [
+                {
+                    "text": "||",
+                    "is_correct": true
+                },
+                {
+                    "text": "&&",
+                    "is_correct": false
+                },
+                {
+                    "text": "|",
+                    "is_correct": false
+                },
+                {
+                    "text": "!",
+                    "is_correct": false
+                }
+            ]
+        },
+        {
+            "text": "What is a 'sentinel' value?",
+            "type": "MCQ",
+            "explanation": "A sentinel value is a special value used to signal the end of a sequence of data or a loop.",
+            "choices": [
+                {
+                    "text": "A value to terminate a loop",
+                    "is_correct": true
+                },
+                {
+                    "text": "A loop counter",
+                    "is_correct": false
+                },
+                {
+                    "text": "A reserved keyword",
+                    "is_correct": false
+                },
+                {
+                    "text": "A constant",
+                    "is_correct": false
+                }
+            ]
+        },
+        {
+            "text": "What is the result of using '==' with two different objects in Java?",
+            "type": "MCQ",
+            "explanation": "== compares memory references (addresses), not object content.",
+            "choices": [
+                {
+                    "text": "Compares reference addresses",
+                    "is_correct": true
+                },
+                {
+                    "text": "Compares object values",
+                    "is_correct": false
+                },
+                {
+                    "text": "Always true",
+                    "is_correct": false
+                },
+                {
+                    "text": "Always false",
+                    "is_correct": false
+                }
+            ]
+        },
+        {
+            "text": "Which loop is best when you don't know the exact number of iterations beforehand?",
+            "type": "MCQ",
+            "explanation": "While loops are generally used when the termination condition depends on dynamic factors.",
+            "choices": [
+                {
+                    "text": "while",
+                    "is_correct": true
+                },
+                {
+                    "text": "for",
+                    "is_correct": false
+                },
+                {
+                    "text": "nested loop",
+                    "is_correct": false
+                },
+                {
+                    "text": "infinite loop",
+                    "is_correct": false
+                }
+            ]
+        },
+        {
+            "text": "What is the ternary operator syntax in Java?",
+            "type": "MCQ",
+            "explanation": "The ternary operator is condition ? expr1 : expr2.",
+            "choices": [
+                {
+                    "text": "? :",
+                    "is_correct": true
+                },
+                {
+                    "text": "?",
+                    "is_correct": false
+                },
+                {
+                    "text": "!",
+                    "is_correct": false
+                },
+                {
+                    "text": "??",
+                    "is_correct": false
+                }
+            ]
+        },
+        {
+            "text": "What happens in a 'switch' without 'break' statements?",
+            "type": "MCQ",
+            "explanation": "This is called 'fall-through', where execution continues into the next case's block.",
+            "choices": [
+                {
+                    "text": "Execution falls through to next cases",
+                    "is_correct": true
+                },
+                {
+                    "text": "Compiler error",
+                    "is_correct": false
+                },
+                {
+                    "text": "Only the first case runs",
+                    "is_correct": false
+                },
+                {
+                    "text": "The default case runs immediately",
+                    "is_correct": false
+                }
+            ]
+        },
+        {
+            "text": "Which loop is functionally equivalent to for(;;) in Java?",
+            "type": "MCQ",
+            "explanation": "Both for(;;) and while(true) create intentional infinite loops.",
+            "choices": [
+                {
+                    "text": "while(true)",
+                    "is_correct": true
+                },
+                {
+                    "text": "do-while(false)",
+                    "is_correct": false
+                },
+                {
+                    "text": "for(i=0; i<10; i++)",
+                    "is_correct": false
+                },
+                {
+                    "text": "switch(true)",
+                    "is_correct": false
+                }
+            ]
+        },
+        {
+            "text": "What is a 'nested if'?",
+            "type": "MCQ",
+            "explanation": "A nested if is an if statement inside the body of another if statement.",
+            "choices": [
+                {
+                    "text": "An if inside another if",
+                    "is_correct": true
+                },
+                {
+                    "text": "An if followed by an else",
+                    "is_correct": false
+                },
+                {
+                    "text": "Multiple if statements",
+                    "is_correct": false
+                },
+                {
+                    "text": "A loop with an if",
+                    "is_correct": false
+                }
+            ]
+        },
+        {
+            "text": "Which datatype can be used in a switch expression (since Java 7)?",
+            "type": "MCQ",
+            "explanation": "Java 7 added support for String objects in switch expressions.",
+            "choices": [
+                {
+                    "text": "String",
+                    "is_correct": true
+                },
+                {
+                    "text": "float",
+                    "is_correct": false
+                },
+                {
+                    "text": "double",
+                    "is_correct": false
+                },
+                {
+                    "text": "boolean",
+                    "is_correct": false
+                }
+            ]
+        },
+        {
+            "text": "What is the increment part in for(i=0; i<5; i++)?",
+            "type": "MCQ",
+            "explanation": "i++ is the increment/update part of the for loop structure.",
+            "choices": [
+                {
+                    "text": "i++",
+                    "is_correct": true
+                },
+                {
+                    "text": "i=0",
+                    "is_correct": false
+                },
+                {
+                    "text": "i<5",
+                    "is_correct": false
+                },
+                {
+                    "text": "for",
+                    "is_correct": false
+                }
+            ]
+        },
+        {
+            "text": "What value does (5 > 3) ? 10 : 20 evaluate to?",
+            "type": "MCQ",
+            "explanation": "Since 5 > 3 is true, it chooses the first value (10).",
+            "choices": [
+                {
+                    "text": "10",
+                    "is_correct": true
+                },
+                {
+                    "text": "20",
+                    "is_correct": false
+                },
+                {
+                    "text": "true",
+                    "is_correct": false
+                },
+                {
+                    "text": "false",
+                    "is_correct": false
+                }
+            ]
+        },
+        {
+            "text": "Which loop structure is often used for traversing collections (since Java 5)?",
+            "type": "MCQ",
+            "explanation": "The 'enhanced for loop' (or for-each loop) simplifies collection and array iteration.",
+            "choices": [
+                {
+                    "text": "for-each loop",
+                    "is_correct": true
+                },
+                {
+                    "text": "while loop",
+                    "is_correct": false
+                },
+                {
+                    "text": "do-while loop",
+                    "is_correct": false
+                },
+                {
+                    "text": "standard for loop",
+                    "is_correct": false
+                }
+            ]
+        },
+        {
+            "text": "Short-circuit evaluation in '&&' means:",
+            "type": "MCQ",
+            "explanation": "If the first operand is false, the second is not evaluated because the result must be false.",
+            "choices": [
+                {
+                    "text": "Skip rest if first is false",
+                    "is_correct": true
+                },
+                {
+                    "text": "Skip rest if first is true",
+                    "is_correct": false
+                },
+                {
+                    "text": "Always evaluates both",
+                    "is_correct": false
+                },
+                {
+                    "text": "Compiler optimization only",
+                    "is_correct": false
+                }
+            ]
+        },
+        {
+            "text": "What happens when you hit 'continue' in a 'do-while' loop?",
+            "type": "MCQ",
+            "explanation": "It jumps immediately to the condition check at the bottom of the loop.",
+            "choices": [
+                {
+                    "text": "Jumps to condition check",
+                    "is_correct": true
+                },
+                {
+                    "text": "Exits the loop",
+                    "is_correct": false
+                },
+                {
+                    "text": "Restarts the entire loop",
+                    "is_correct": false
+                },
+                {
+                    "text": "Error occurs",
+                    "is_correct": false
+                }
+            ]
+        },
+        {
+            "text": "Compare using 'if-else' vs 'switch-case'. When is each preferred?",
+            "type": "DESCRIPTIVE",
+            "explanation": "If-else is better for ranges and complex conditions. Switch-case is cleaner for multiple discrete constant values."
+        },
+        {
+            "text": "Explain the three types of loops in Java with examples.",
+            "type": "DESCRIPTIVE",
+            "explanation": "Discuss for (fixed iterations), while (entry check), and do-while (exit check)."
+        },
+        {
+            "text": "What is an infinite loop and how can it be both accidental and intentional?",
+            "type": "DESCRIPTIVE",
+            "explanation": "Accidental loops occur due to logic errors. Intentional ones are used for servers or events (e.g., game loops)."
+        },
+        {
+            "text": "Explain the role of 'break' and 'continue' in control flow.",
+            "type": "DESCRIPTIVE",
+            "explanation": "Break exits a block early. Continue skips to the next cycle. Both help manage complex iteration logic."
+        },
+        {
+            "text": "Describe logical operators in Java and how short-circuiting works.",
+            "type": "DESCRIPTIVE",
+            "explanation": "Explain &&, ||, ! and how &&/|| skip the second operand based on the first's result."
+        },
+        {
+            "text": "Write a program to print the Fibonacci series up to n terms.",
+            "type": "CODING",
+            "initial_code": "import java.util.Scanner;\\npublic class Main {\\n    public static void main(String[] args) {\\n        Scanner sc = new Scanner(System.in);\\n        int n = sc.nextInt();\\n        // solve here\\n    }\\n}",
+            "expected_output": "0 1 1 2 3 ... (n terms)",
+            "explanation": "Use a loop to calculate each term as the sum of previous two."
+        },
+        {
+            "text": "Write a program to check if a number is Prime or not.",
+            "type": "CODING",
+            "initial_code": "import java.util.Scanner;\\npublic class Main {\\n    public static void main(String[] args) {\\n        Scanner sc = new Scanner(System.in);\\n        int num = sc.nextInt();\\n        // solve here\\n    }\\n}",
+            "expected_output": "isPrime or notPrime",
+            "explanation": "Check for factors from 2 up to sqrt(num)."
+        }
+    ]
+}
