@@ -427,9 +427,8 @@ def admin_portal_required(view_func):
         # Call the view
         result = view_func(request, *args, **kwargs)
         
-        # If it's a full page load, clear the auth so next navigation asks again
-        if not is_ajax:
-            request.session['admin_portal_auth'] = False
+        # We no longer clear the auth here because it breaks subsequent AJAX calls on the same page.
+        # The session will persist until it normally expires or the user logs out of Django.
             
         return result
     return _wrapped_view

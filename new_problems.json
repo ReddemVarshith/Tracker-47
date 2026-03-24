@@ -1,178 +1,173 @@
 {
-    "module_title": "Arrays",
+    "module_title": "Strings",
     "problems": [
         {
-            "title": "Count Occurrences of All Elements",
+            "title": "Check Substring Presence",
             "difficulty": "EASY",
-            "description": "In this problem, you are required to count the number of occurrences (frequency) of each element in the array.\n\nYou will be given an array of integers. Your task is to print each unique element along with how many times it appears.\n\nIn Java, this can be efficiently solved using a HashMap where the key is the element and the value is its frequency.\n\nThis problem is important for understanding frequency counting and is widely used in problems involving hashing and data analysis.",
-            "input_format": "First line contains integer n.\nSecond line contains n integers.",
-            "output_format": "Print each element and its frequency (element:count).",
+            "description": "Given two strings, check if the second string is a substring of the first.\n\nPrint YES if present, otherwise NO.",
+            "input_format": "First line contains main string.\nSecond line contains substring.",
+            "output_format": "Print YES or NO.",
             "constraints": [
-                "1 <= n <= 100000"
+                "1 <= length <= 100000"
             ],
             "sample_tests": [
                 {
-                    "input": "5\n1 2 2 3 1",
-                    "output": "1:2 2:2 3:1",
-                    "explanation": "1 appears twice, 2 appears twice, 3 appears once."
+                    "input": "hello world\nworld",
+                    "output": "YES"
                 }
             ],
             "test_cases": [
                 {
-                    "input": "4\n1 1 1 1",
-                    "output": "1:4"
+                    "input": "abcdef\ncd",
+                    "output": "YES"
                 },
                 {
-                    "input": "3\n5 6 7",
-                    "output": "5:1 6:1 7:1"
+                    "input": "abcdef\ngh",
+                    "output": "NO"
                 },
                 {
-                    "input": "5\n2 3 2 3 2",
-                    "output": "2:3 3:2"
+                    "input": "a\na",
+                    "output": "YES"
                 },
                 {
-                    "input": "1\n10",
-                    "output": "10:1"
+                    "input": "abc\nabcd",
+                    "output": "NO"
                 }
             ]
         },
         {
-            "title": "Replace Negative Numbers with Zero",
+            "title": "Repeat String n Times",
             "difficulty": "EASY",
-            "description": "In this problem, you need to replace all negative numbers in an array with zero.\n\nYou will be given an array of integers. Traverse the array and whenever you encounter a negative number, replace it with 0.\n\nThis problem helps in understanding array modification and conditional updates.",
-            "input_format": "First line contains integer n.\nSecond line contains n integers.",
-            "output_format": "Print modified array.",
+            "description": "Given a string and an integer n, repeat the string n times.",
+            "input_format": "First line contains string.\nSecond line contains integer n.",
+            "output_format": "Print repeated string.",
             "constraints": [
-                "1 <= n <= 100000"
+                "1 <= length <= 1000"
             ],
             "sample_tests": [
                 {
-                    "input": "5\n-1 2 -3 4 5",
-                    "output": "0 2 0 4 5",
-                    "explanation": "Negative values replaced with 0."
+                    "input": "ab\n3",
+                    "output": "ababab"
                 }
             ],
             "test_cases": [
                 {
-                    "input": "3\n-1 -2 -3",
-                    "output": "0 0 0"
+                    "input": "a\n5",
+                    "output": "aaaaa"
                 },
                 {
-                    "input": "4\n1 2 3 4",
-                    "output": "1 2 3 4"
+                    "input": "xy\n2",
+                    "output": "xyxy"
                 },
                 {
-                    "input": "1\n-5",
-                    "output": "0"
+                    "input": "z\n1",
+                    "output": "z"
                 },
                 {
-                    "input": "5\n0 -1 2 -2 3",
-                    "output": "0 0 2 0 3"
+                    "input": "hi\n0",
+                    "output": ""
                 }
             ]
         },
         {
-            "title": "Multiply All Elements",
+            "title": "Find Middle Character",
             "difficulty": "EASY",
-            "description": "In this problem, you are required to compute the product of all elements in an array.\n\nYou will be given an array of integers. Multiply all elements and print the result.\n\nBe careful with large numbers as the result may grow quickly. You can assume the result fits within a 64-bit integer.\n\nThis problem helps in understanding cumulative operations similar to sum but with multiplication.",
-            "input_format": "First line contains integer n.\nSecond line contains n integers.",
-            "output_format": "Print product of all elements.",
+            "description": "Given a string, print the middle character.\n\nIf length is even, print the left middle.",
+            "input_format": "Single line containing a string.",
+            "output_format": "Print middle character.",
             "constraints": [
-                "1 <= n <= 20"
+                "1 <= length <= 100000"
             ],
             "sample_tests": [
                 {
-                    "input": "4\n1 2 3 4",
-                    "output": "24",
-                    "explanation": "1*2*3*4 = 24"
+                    "input": "hello",
+                    "output": "l"
                 }
             ],
             "test_cases": [
                 {
-                    "input": "3\n2 3 4",
-                    "output": "24"
+                    "input": "abcd",
+                    "output": "b"
                 },
                 {
-                    "input": "1\n5",
-                    "output": "5"
+                    "input": "a",
+                    "output": "a"
                 },
                 {
-                    "input": "3\n-1 2 -3",
-                    "output": "6"
+                    "input": "xyz",
+                    "output": "y"
                 },
                 {
-                    "input": "4\n1 0 3 4",
-                    "output": "0"
+                    "input": "java",
+                    "output": "a"
                 }
             ]
         },
         {
-            "title": "Find Average of Array",
+            "title": "Swap First and Last Character",
             "difficulty": "EASY",
-            "description": "In this problem, you need to calculate the average (mean) of all elements in an array.\n\nThe average is calculated as sum of all elements divided by the number of elements.\n\nIn Java, compute the sum first and then divide by n. Make sure to use appropriate data types to avoid integer division issues.",
-            "input_format": "First line contains integer n.\nSecond line contains n integers.",
-            "output_format": "Print the average (integer division).",
+            "description": "Given a string, swap its first and last characters.",
+            "input_format": "Single line containing a string.",
+            "output_format": "Print modified string.",
             "constraints": [
-                "1 <= n <= 100000"
+                "1 <= length <= 100000"
             ],
             "sample_tests": [
                 {
-                    "input": "5\n1 2 3 4 5",
-                    "output": "3",
-                    "explanation": "(1+2+3+4+5)/5 = 3"
+                    "input": "hello",
+                    "output": "oellh"
                 }
             ],
             "test_cases": [
                 {
-                    "input": "3\n10 20 30",
-                    "output": "20"
+                    "input": "ab",
+                    "output": "ba"
                 },
                 {
-                    "input": "1\n5",
-                    "output": "5"
+                    "input": "a",
+                    "output": "a"
                 },
                 {
-                    "input": "4\n2 4 6 8",
-                    "output": "5"
+                    "input": "world",
+                    "output": "dorlw"
                 },
                 {
-                    "input": "5\n-1 -2 -3 -4 -5",
-                    "output": "-3"
+                    "input": "xy",
+                    "output": "yx"
                 }
             ]
         },
         {
-            "title": "Find Range of Array",
+            "title": "Remove First Occurrence of Character",
             "difficulty": "EASY",
-            "description": "In this problem, you are required to find the range of the array.\n\nThe range is defined as the difference between the maximum and minimum elements (range = max - min).\n\nYou should first find the maximum and minimum values in the array, then compute their difference.\n\nThis problem helps combine multiple operations in a single traversal.",
-            "input_format": "First line contains integer n.\nSecond line contains n integers.",
-            "output_format": "Print the range.",
+            "description": "Given a string and a character, remove the first occurrence of that character.",
+            "input_format": "First line contains string.\nSecond line contains character.",
+            "output_format": "Print modified string.",
             "constraints": [
-                "1 <= n <= 100000"
+                "1 <= length <= 100000"
             ],
             "sample_tests": [
                 {
-                    "input": "5\n1 2 3 4 5",
-                    "output": "4",
-                    "explanation": "Max = 5, Min = 1, Range = 4"
+                    "input": "hello\nl",
+                    "output": "helo"
                 }
             ],
             "test_cases": [
                 {
-                    "input": "3\n10 20 30",
-                    "output": "20"
+                    "input": "banana\na",
+                    "output": "bnana"
                 },
                 {
-                    "input": "1\n5",
-                    "output": "0"
+                    "input": "abc\nd",
+                    "output": "abc"
                 },
                 {
-                    "input": "4\n-1 -2 -3 -4",
-                    "output": "3"
+                    "input": "a\na",
+                    "output": ""
                 },
                 {
-                    "input": "5\n7 8 9 6 5",
-                    "output": "4"
+                    "input": "mississippi\ns",
+                    "output": "miissippi"
                 }
             ]
         }
